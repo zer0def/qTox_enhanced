@@ -261,3 +261,4 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`./flatpak/io.github.qtox.qTox.json`]: flatpak/io.github.qtox.qTox.json
 [the Flathub build bot]: https://flathub.org/builds/#/
 [qTox-nightly-release]: https://github.com/qTox/qTox-nightly-releases
+

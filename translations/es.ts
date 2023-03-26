@@ -497,6 +497,7 @@ lo que puede provocar problemas en las videollamadas.</translation>
         <translation>
             <numerusform>Listo para importar %n contacto, clic en enviar para confirmar</numerusform>
             <numerusform>Listo para importar %n contactos, clic en enviar para confirmar</numerusform>
+            <numerusform>Listo para importar %n contactos, haz clic en enviar para confirmar</numerusform>
         </translation>
     </message>
     <message>
@@ -1389,6 +1390,7 @@ los únicos servidores Push permitidos son (nunca se contactará con ningún otr
         <translation>
             <numerusform>%n usuario en el chat</numerusform>
             <numerusform>%n usuarios en el chat</numerusform>
+            <numerusform>%n usuarios en el chat</numerusform>
         </translation>
     </message>
     <message>
@@ -1454,7 +1456,8 @@ los únicos servidores Push permitidos son (nunca se contactará con ningún otr
         <comment>Number of users in chat</comment>
         <translation>
             <numerusform>%n usuario en el chat</numerusform>
-            <numerusform>%n usuarios en el chat</numerusform>
+            <numerusform>%n usuarios en los chats</numerusform>
+            <numerusform>%n usuarios en los chats</numerusform>
         </translation>
     </message>
     <message>
@@ -1970,8 +1973,9 @@ Verifica que sean la misma en ambos recuadros.</translation>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation>
-            <numerusform>Mensaje no leído</numerusform>
-            <numerusform>Mensajes no leídos</numerusform>
+            <numerusform>Mensaje sin leer</numerusform>
+            <numerusform>Mensajes sin leer</numerusform>
+            <numerusform>Mensajes sin leer</numerusform>
         </translation>
     </message>
 </context>
@@ -3156,15 +3160,17 @@ Este ID incluye el código NoSpam (en azul), y la suma de comprobación (en gris
     <message numerus="yes">
         <source>%n new friend request(s)</source>
         <translation>
-            <numerusform>%n nueva solicitud de amistad</numerusform>
-            <numerusform>%n nuevas solicitudes de amistad</numerusform>
+            <numerusform>%n nueva petición de amistad</numerusform>
+            <numerusform>%n nuevas peticiones de amistad</numerusform>
+            <numerusform>%n nuevas peticiones de amistad</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n new group invite(s)</source>
         <translation>
-            <numerusform>%n nueva invitación de grupo</numerusform>
-            <numerusform>%n nuevas invitaciones de grupo</numerusform>
+            <numerusform>%n nuevo grupo invitado</numerusform>
+            <numerusform>%n nuevos grupos invitados</numerusform>
+            <numerusform>%n nuevos grupos invitados</numerusform>
         </translation>
     </message>
     <message>

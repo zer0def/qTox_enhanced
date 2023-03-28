@@ -27,8 +27,8 @@ Status
 Installation
 =
 
-| <a href="https://github.com/Zoxcore/qTox_enhanced/releases/latest"><img src="https://raw.githubusercontent.com/Zoxcore/qTox_enhanced/zoxcore/push_notification/doc/on_github.png" width="200"></a> | <a href="https://snapcraft.io/qtox-enhanced"><img src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" height="55"></a> | 
-|--------|--------|
+| <a href="https://github.com/Zoxcore/qTox_enhanced/releases/latest"><img src="https://raw.githubusercontent.com/Zoxcore/qTox_enhanced/zoxcore/push_notification/doc/on_github.png" width="200"></a> | <a href="https://github.com/Zoxcore/qTox_enhanced/releases/tag/nightly"><img src="https://raw.githubusercontent.com/Zoxcore/qTox_enhanced/zoxcore/push_notification/doc/on_github_nightly.png" width="200"></a> | <a href="https://snapcraft.io/qtox-enhanced"><img src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" height="55"></a> | 
+|--------|--------|--------|
 
  Help Translate the App in your Language
 =

@@ -187,6 +187,7 @@ signals:
     void emptyGroupCreated(int groupnumber, const GroupId groupId, const QString& title = QString());
     void groupInviteReceived(const GroupInvite& inviteInfo);
     void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction, const int hasIdType = 0);
+    void groupMessageReceivedImage(int groupnumber, int peernumber, const uint8_t *data, size_t length, bool isAction, const int hasIdType = 0);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void groupPeerlistChanged(int groupnumber);
     void groupPeerNameChanged(int groupnumber, const ToxPk& peerPk, const QString& newName);
@@ -234,6 +235,10 @@ private:
                              const uint8_t *message, size_t length, uint32_t message_id, void* vCore);
     static void onNgcGroupPrivateMessage(Tox* tox, uint32_t group_number, uint32_t peer_id, Tox_Message_Type type,
         const uint8_t *message, size_t length, void* vCore);
+    static void onNgcGroupCustomPacket(Tox* tox, uint32_t group_number, uint32_t peer_id, const uint8_t *data,
+        size_t length, void* vCore);
+    static void onNgcGroupCustomPrivatePacket(Tox* tox, uint32_t group_number, uint32_t peer_id, const uint8_t *data,
+        size_t length, void* vCore);
 
     static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, Tox_Message_Type type,
                                const uint8_t* cMessage, size_t length, void* vCore);

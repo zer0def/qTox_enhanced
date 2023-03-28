@@ -132,6 +132,8 @@ void Core::registerCallbacks(Tox* tox)
     tox_callback_group_peer_name(tox, onNgcPeerName);
     tox_callback_group_message(tox, onNgcGroupMessage);
     tox_callback_group_private_message(tox, onNgcGroupPrivateMessage);
+    tox_callback_group_custom_packet(tox, onNgcGroupCustomPacket);
+    tox_callback_group_custom_private_packet(tox, onNgcGroupCustomPrivatePacket);
 
     // HINT: print Qt compiled and runtime versions
     qDebug() << "QT_COMPILE_VERSION:" << QT_VERSION_STR << "QT_RUNTIME_VERSION:" << qVersion();
@@ -851,6 +853,50 @@ void Core::onNgcGroupPrivateMessage(Tox* tox, uint32_t group_number, uint32_t pe
     QString msg = ToxString(message, length).getQString();
     qDebug() << QString("onNgcGroupPrivateMessage:peer=") << peer_id;
     emit core->groupMessageReceived((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id, QString("Private Message:") + msg, false);
+}
+
+void Core::onNgcGroupCustomPacket(Tox* tox, uint32_t group_number, uint32_t peer_id, const uint8_t *data,
+        size_t length, void* vCore)
+{
+    std::ignore = tox;
+    Core* core = static_cast<Core*>(vCore);
+    std::ignore = length;
+    qDebug() << QString("onNgcGroupCustomPacket:peer=") << peer_id << QString("length=") << length;
+
+    size_t header_len = 6 + 1 + 1 + 32 + 4 + 255;
+    if (length > header_len)
+    {
+        if (
+            (data[0] == 0x66) &&
+            (data[1] == 0x77) &&
+            (data[2] == 0x88) &&
+            (data[3] == 0x11) &&
+            (data[4] == 0x34) &&
+            (data[5] == 0x35))
+        {
+            if ((data[6] == 0x1) && (data[7] == 0x11))
+            {
+                // HINT: ok we have a group file
+                auto peerPk = core->getGroupPeerPk((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id);
+                emit core->groupMessageReceivedImage((Settings::NGC_GROUPNUM_OFFSET + group_number),
+                    peer_id, (data + header_len),
+                    (length - header_len), false,
+                    static_cast<int>(Widget::MessageHasIdType::NGC_MSG_ID));
+            }
+        }
+    }
+}
+
+void Core::onNgcGroupCustomPrivatePacket(Tox* tox, uint32_t group_number, uint32_t peer_id, const uint8_t *data,
+        size_t length, void* vCore)
+{
+    std::ignore = tox;
+    Core* core = static_cast<Core*>(vCore);
+    std::ignore = core;
+    std::ignore = group_number;
+    std::ignore = data;
+    std::ignore = length;
+    qDebug() << QString("onNgcGroupCustomPrivatePacket:peer=") << peer_id << QString("length=") << length;
 }
 
 void Core::onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, Tox_Message_Type type,

@@ -36,7 +36,6 @@ export OPENSSL_LIBS
     -skip doc \
     -skip gamepad \
     -skip graphicaleffects \
-    -skip imageformats \
     -skip location \
     -skip macextras \
     -skip multimedia \
@@ -65,6 +64,8 @@ export OPENSSL_LIBS
     -qt-zlib \
     -qt-pcre \
     -opengl desktop
+
+#    -skip imageformats \
 
 make -j $(nproc)
 make install

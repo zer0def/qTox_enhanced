@@ -36,6 +36,7 @@
 
 #include <QApplication>
 #include <QFontDatabase>
+#include <QImageReader>
 #include <QCommandLineParser>
 #include <QDir>
 #include <QMessageBox>
@@ -291,7 +292,15 @@ int AppManager::run()
 
     // Windows platform plugins DLL hell fix
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
+    QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath() + QDir::separator() + "imageformats");
     qapp->addLibraryPath("platforms");
+    qapp->addLibraryPath("imageformats");
+
+    QList <QByteArray> supportedFilters = QImageReader::supportedImageFormats();
+    for (int i = 0; i < supportedFilters.size(); ++i)  // fill supported file extensions
+    {
+        qDebug() << "supported imageformats:" << supportedFilters[i];
+    }
 
     qDebug() << "commit: " << GIT_VERSION;
 

@@ -176,6 +176,11 @@ $QTOX_PREFIX_DIR/imageformats/qgif.dll
 $QTOX_PREFIX_DIR/imageformats/qico.dll
 $QTOX_PREFIX_DIR/imageformats/qjpeg.dll
 $QTOX_PREFIX_DIR/imageformats/qsvg.dll
+$QTOX_PREFIX_DIR/imageformats/qicns.dll
+$QTOX_PREFIX_DIR/imageformats/qtiff.dll
+$QTOX_PREFIX_DIR/imageformats/qwbmp.dll
+$QTOX_PREFIX_DIR/imageformats/qwebp.dll
+$QTOX_PREFIX_DIR/imageformats/qtga.dll
 $QTOX_PREFIX_DIR/platforms/qdirect2d.dll
 $QTOX_PREFIX_DIR/platforms/qminimal.dll
 $QTOX_PREFIX_DIR/platforms/qoffscreen.dll

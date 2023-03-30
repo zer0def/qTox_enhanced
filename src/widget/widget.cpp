@@ -2092,12 +2092,13 @@ void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const 
     bool result = mpixmap.loadFromData(image_data_bytes,"WEBP");
     qDebug() << "onGroupMessageReceivedImage:loadFromData:res=" << result;
 
-    if (result)
-    {
+    //if (result)
+    //{
         // HINT: WEBP image could be loaded OK, so save hex data into DB
+        //       add message even if image could not be loaded
         QString message = QString::fromUtf8(image_data_bytes.toHex()).toUpper().rightJustified((length * 2), '0') + QString(":") + QString("___");
         groupMessageDispatchers[groupId]->onMessageReceived(author, isAction, message, hasIdType);
-    }
+    //}
 }
 
 void Widget::onGroupPeerlistChanged(uint32_t groupnumber)

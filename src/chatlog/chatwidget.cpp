@@ -98,7 +98,7 @@ ChatMessage::Ptr createMessage(const QString& pubkey, const QString& displayName
 }
 
 void renderMessageRaw(const QString& pubkey, const QString& displayName, bool isSelf, bool colorizeNames,
-                   const ChatLogMessage& chatLogMessage, ChatLine::Ptr& chatLine,
+                   ChatLogMessage& chatLogMessage, ChatLine::Ptr& chatLine,
                    DocumentCache& documentCache, SmileyPack& smileyPack,
                    Settings& settings, Style& style)
 {
@@ -124,8 +124,6 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
         }
     } else {
         qDebug() << QString("renderMessageRaw:chatMessage:FALSE");
-        chatLine = createMessage(pubkey, displayName, isSelf, colorizeNames, chatLogMessage,
-            documentCache, smileyPack, settings, style);
 
         if ((chatLogMessage.message.id_or_hash.size() > 32) && (chatLogMessage.message.content == "___"))
         {
@@ -134,19 +132,27 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
             bool result = pixmap_.loadFromData(image_data_bytes,"WEBP");
             qDebug() << "renderMessageRaw:loadFromData:res=" << result;
 
-            //chatLine->replaceContent(1, new Image(QSize(120, 120), pixmap_),
-            //                    ColumnFormat(120.0, ColumnFormat::VariableSize, ColumnFormat::Center)
-            //                    );
             if (result)
             {
+                chatLine = createMessage(pubkey, displayName, isSelf, colorizeNames, chatLogMessage,
+                    documentCache, smileyPack, settings, style);
+
                 chatLine->replaceContent(2, new Image(QSize(100, 100),
                     pixmap_.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
                 chatLine->moveBy(300);
             }
             else
             {
-                // TODO: write error text into text field
+                // HINT: write error text into text field
+                chatLogMessage.message.content = QString("** ERROR loading Image **");
+                chatLine = createMessage(pubkey, displayName, isSelf, colorizeNames, chatLogMessage,
+                    documentCache, smileyPack, settings, style);
             }
+        }
+        else
+        {
+            chatLine = createMessage(pubkey, displayName, isSelf, colorizeNames, chatLogMessage,
+                documentCache, smileyPack, settings, style);
         }
     }
 }
@@ -1457,7 +1463,7 @@ void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool coloriz
 
     switch (item.getContentType()) {
     case ChatLogItem::ContentType::message: {
-        const auto& chatLogMessage = item.getContentAsMessage();
+        auto chatLogMessage = item.getContentAsMessage();
         // HINT: ***********render message**********
         // HINT: ***********render message**********
         // HINT: ***********render message**********

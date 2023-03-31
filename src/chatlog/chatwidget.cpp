@@ -134,17 +134,44 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
 
             if (result)
             {
+                // chatLogMessage.message.content = QString("_\n_\n_\n_\n_\n_\n_\n_\n");
+                chatLogMessage.message.content = QString("** Group Image **");
                 chatLine = createMessage(pubkey, displayName, isSelf, colorizeNames, chatLogMessage,
                     documentCache, smileyPack, settings, style);
 
-                chatLine->replaceContent(2, new Image(QSize(100, 100),
-                    pixmap_.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
-                chatLine->moveBy(300);
+                // HINT: since i couldn't figure out why the image was always too high and to much left
+                //       this hack is used. it works.
+                // TODO: make a proper solution for image displayed in chatwindow
+                int qx = 500; // canvas 500x600 transparent
+                int qy = 600; // canvas 500x600 transparent
+                int s = 280; // image 280x280 max
+                int dx = qx-s;
+                int dy = qy-s;
+                QPixmap scaled_image = pixmap_.scaled(s, s, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                QPixmap target(qx, qy);
+                QRect tgt(dx, dy, s, s);
+                QRect src(0, 0, s, s);
+                target.fill(Qt::transparent);
+                QPainter *paint = new QPainter(&target);
+                paint->drawPixmap(tgt, scaled_image, src);
+                // -----------------------------
+                // HINT: show red bounding box of pixmap for debugging
+                // paint->setPen(QColor("red"));
+                // paint->drawRect(0, 0, qx-1, qy-1);
+                // -----------------------------
+                delete paint;
+
+                //chatLine->replaceContentImage(2, new Image(QSize(280, 280),
+                //    pixmap_.scaled(s, s, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
+
+                chatLine->addColumn(
+                    new Image(QSize(qx, qy), target) ,
+                        ColumnFormat(1.0, ColumnFormat::VariableSize));
             }
             else
             {
                 // HINT: write error text into text field
-                chatLogMessage.message.content = QString("** ERROR loading Image **");
+                chatLogMessage.message.content = QString("** ERROR decoding Image **");
                 chatLine = createMessage(pubkey, displayName, isSelf, colorizeNames, chatLogMessage,
                     documentCache, smileyPack, settings, style);
             }

@@ -146,10 +146,11 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
                 int qy = 600; // canvas 500x600 transparent
                 int s = 280; // image 280x280 max
                 int dx = qx-s;
+                std::ignore = dx;
                 int dy = qy-s;
                 QPixmap scaled_image = pixmap_.scaled(s, s, Qt::KeepAspectRatio, Qt::SmoothTransformation);
                 QPixmap target(qx, qy);
-                QRect tgt(dx, dy, s, s);
+                QRect tgt(0, dy, s, s); // put image left top at (0, dy) in target rectangle -> put it on horizontal left and vertical bottom
                 QRect src(0, 0, s, s);
                 target.fill(Qt::transparent);
                 QPainter *paint = new QPainter(&target);
@@ -158,6 +159,8 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
                 // HINT: show red bounding box of pixmap for debugging
                 // paint->setPen(QColor("red"));
                 // paint->drawRect(0, 0, qx-1, qy-1);
+                // paint->setPen(QColor("blue"));
+                // paint->drawLine(0, 0, qx-1, 0);
                 // -----------------------------
                 delete paint;
 
@@ -166,7 +169,7 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
 
                 chatLine->addColumn(
                     new Image(QSize(qx, qy), target) ,
-                        ColumnFormat(1.0, ColumnFormat::VariableSize));
+                        ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
             }
             else
             {

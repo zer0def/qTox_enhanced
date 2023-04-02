@@ -17,6 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QCoreApplication>
 #include <QDebug>
 #include <QNetworkAccessManager>
 #if QT_VERSION >= QT_VERSION_CHECK( 5, 10, 0 )
@@ -639,6 +640,8 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
     queryText += QString(" order by timestamp ASC;");
 
     qDebug() << QString("getGroupMessagesXMinutesBack:SQL:") << queryText;
+    const bool isGuiThread2 = QThread::currentThread() == QCoreApplication::instance()->thread();
+    qDebug() << QString("getGroupMessagesXMinutesBack:THREAD:001:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread2;
 
     Tox* toxcore = settings.getToxcore();
     QList<HistMessage> messages;
@@ -724,6 +727,8 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
                 uint8_t* data_buf = reinterpret_cast<uint8_t*>(calloc(1, data_length));
                 if (data_buf)
                 {
+                    // -----------------------------------------------------------
+                    // header (8 bytes)
                     uint8_t* data_buf_cur = data_buf;
                     *data_buf_cur = 0x66;
                     data_buf_cur++;
@@ -808,12 +813,24 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
                     QByteArray data_buf_bytearray = QByteArray(reinterpret_cast<const char*>(data_buf), data_length);
                     qDebug() << QString("getGroupMessagesXMinutesBack:send_bytes:") << QString::fromUtf8(data_buf_bytearray.toHex()).toUpper();
 
-                    int result = tox_group_send_custom_private_packet(toxcore, (groupnumber - Settings::NGC_GROUPNUM_OFFSET),
-                                                                      peernumber, 1, data_buf,
-                                                                      data_length, &error);
-                    qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:groupnumber:") << groupnumber << "groupnumber_corr:" << (groupnumber - Settings::NGC_GROUPNUM_OFFSET);
-                    qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:result:") << result << "error:" << error;
+                    if (toxcore != nullptr)
+                    {
+                        int result = tox_group_send_custom_private_packet(toxcore, (groupnumber - Settings::NGC_GROUPNUM_OFFSET),
+                                                                          peernumber, 1, data_buf,
+                                                                          data_length, &error);
+
+                        const bool isGuiThread3 = QThread::currentThread() == QCoreApplication::instance()->thread();
+                        qDebug() << QString("getGroupMessagesXMinutesBack:THREAD:002:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread3;
+                        qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:groupnumber:") << groupnumber << "groupnumber_corr:" << (groupnumber - Settings::NGC_GROUPNUM_OFFSET);
+                        qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:result:") << result << "error:" << error;
+                    }
                     free(data_buf);
+
+                    if (toxcore != nullptr)
+                    {
+                        // HINT: wait "n" milliseconds before sending the next sync message
+                        QThread::msleep(n);
+                    }
                 }
                 else
                 {

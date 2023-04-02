@@ -839,6 +839,9 @@ void Core::onNgcGroupMessage(Tox* tox, uint32_t group_number, uint32_t peer_id, 
     // qDebug() << "msgIdhash:" << QString::fromUtf8(msgIdhash.toHex()).toUpper();
     msg = QString::fromUtf8(msgIdhash.toHex()).toUpper().rightJustified(8, '0') + QString(":") + msg;
 
+    const bool isGuiThread = QThread::currentThread() == QCoreApplication::instance()->thread();
+    qDebug() << QString("onNgcGroupMessage:THREAD:TOX:010:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread;
+
     auto peerPk = core->getGroupPeerPk((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id);
     emit core->groupMessageReceived((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id, msg,
         false, false, static_cast<int>(Widget::MessageHasIdType::NGC_MSG_ID));
@@ -864,6 +867,8 @@ void Core::onNgcGroupCustomPacket(Tox* tox, uint32_t group_number, uint32_t peer
     Core* core = static_cast<Core*>(vCore);
     std::ignore = length;
     qDebug() << QString("onNgcGroupCustomPacket:peer=") << peer_id << QString("length=") << length;
+    const bool isGuiThread = QThread::currentThread() == QCoreApplication::instance()->thread();
+    qDebug() << QString("onNgcGroupCustomPacket:THREAD:TOX:011:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread;
 
     size_t header_len = 6 + 1 + 1 + 32 + 4 + 255;
     if (length > header_len)

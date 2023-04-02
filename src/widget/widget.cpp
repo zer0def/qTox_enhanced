@@ -2090,12 +2090,12 @@ void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const 
     //        << "len:" << length;
 
     QPixmap mpixmap;
-    bool result = mpixmap.loadFromData(image_data_bytes,"WEBP");
+    bool result = mpixmap.loadFromData(image_data_bytes);
     qDebug() << "onGroupMessageReceivedImage:loadFromData:res=" << result;
 
     //if (result)
     //{
-        // HINT: WEBP image could be loaded OK, so save hex data into DB
+        // HINT: image could be loaded OK, so save hex data into DB
         //       add message even if image could not be loaded
         QString message = QString::fromUtf8(image_data_bytes.toHex()).toUpper().rightJustified((length * 2), '0') + QString(":") + QString("___");
         groupMessageDispatchers[groupId]->onMessageReceived(author, isAction, false, message, hasIdType);

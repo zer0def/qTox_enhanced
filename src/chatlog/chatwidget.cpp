@@ -129,7 +129,7 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
         {
             QByteArray image_data_bytes = QByteArray::fromHex(chatLogMessage.message.id_or_hash.toLatin1());
             QPixmap pixmap_;
-            bool result = pixmap_.loadFromData(image_data_bytes,"WEBP");
+            bool result = pixmap_.loadFromData(image_data_bytes);
             qDebug() << "renderMessageRaw:loadFromData:res=" << result;
 
             if (result)

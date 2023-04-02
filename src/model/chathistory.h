@@ -60,6 +60,7 @@ private slots:
     void onMessageSent(DispatchedMessageId id, const Message& message);
     void onMessageComplete(DispatchedMessageId id);
     void onMessageBroken(DispatchedMessageId id, BrokenMessageReason reason);
+    void onGroupSyncHistReqRecv(const ToxPk& sender, int groupnumber, int peernumber);
 
 private:
     void ensureIdxInSessionChatLog(ChatLogIdx idx) const;

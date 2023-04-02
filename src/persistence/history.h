@@ -232,7 +232,7 @@ public:
     void addNewMessage(const ChatId& chatId, const QString& message, const ToxPk& sender,
                        const QDateTime& time, bool isDelivered, ExtensionSet extensions,
                        QString dispName, const std::function<void(RowId)>& insertIdCallback = {},
-                       const int hasIdType = 0);
+                       const int hasIdType = 0, const bool isPrivate = false);
 
     void addPushtoken(const ToxPk& sender, const QString& pushtoken);
     QString getPushtoken(const ToxPk& friendPk);
@@ -248,6 +248,8 @@ public:
     size_t getNumMessagesForChat(const ChatId& chatId);
     size_t getNumMessagesForChatBeforeDate(const ChatId& chatId, const QDateTime& date);
     QList<HistMessage> getMessagesForChat(const ChatId& chatId, size_t firstIdx, size_t lastIdx);
+    QList<HistMessage> getGroupMessagesXMinutesBack(const ChatId& chatId, const QDateTime& date, const ToxPk& sender, int groupnumber, int peernumber);
+
     QList<HistMessage> getUndeliveredMessagesForChat(const ChatId& chatId);
     QDateTime getDateWhereFindPhrase(const ChatId& chatId, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);

@@ -128,13 +128,16 @@ std::vector<Message> MessageProcessor::processOutgoingMessage(bool isAction, QSt
 /**
  * @brief Converts an incoming message into a sanitized Message
  */
-Message MessageProcessor::processIncomingCoreMessage(bool isAction, QString const& message)
+Message MessageProcessor::processIncomingCoreMessage(bool isAction, QString const& message, bool isPrivate)
 {
     QDateTime timestamp = QDateTime::currentDateTime();
     auto ret = Message{};
     ret.isAction = isAction;
     ret.content = message;
     ret.timestamp = timestamp;
+    ret.isPrivate = isPrivate;
+
+    qDebug() << "processIncomingCoreMessage: isPrivate:" << isPrivate;
 
     if (detectingMentions) {
         auto nameMention = sharedParams.getNameMention();

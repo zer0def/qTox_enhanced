@@ -841,7 +841,7 @@ void Core::onNgcGroupMessage(Tox* tox, uint32_t group_number, uint32_t peer_id, 
 
     auto peerPk = core->getGroupPeerPk((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id);
     emit core->groupMessageReceived((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id, msg,
-        false, static_cast<int>(Widget::MessageHasIdType::NGC_MSG_ID));
+        false, false, static_cast<int>(Widget::MessageHasIdType::NGC_MSG_ID));
 }
 
 void Core::onNgcGroupPrivateMessage(Tox* tox, uint32_t group_number, uint32_t peer_id, Tox_Message_Type type,
@@ -852,7 +852,9 @@ void Core::onNgcGroupPrivateMessage(Tox* tox, uint32_t group_number, uint32_t pe
     std::ignore = type;
     QString msg = ToxString(message, length).getQString();
     qDebug() << QString("onNgcGroupPrivateMessage:peer=") << peer_id;
-    emit core->groupMessageReceived((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id, QString("Private Message:") + msg, false);
+    emit core->groupMessageReceived((Settings::NGC_GROUPNUM_OFFSET + group_number),
+        peer_id, QString("________:Private Message:") + msg,
+        false, true, static_cast<int>(Widget::MessageHasIdType::NGC_MSG_ID));
 }
 
 void Core::onNgcGroupCustomPacket(Tox* tox, uint32_t group_number, uint32_t peer_id, const uint8_t *data,
@@ -896,7 +898,88 @@ void Core::onNgcGroupCustomPrivatePacket(Tox* tox, uint32_t group_number, uint32
     std::ignore = group_number;
     std::ignore = data;
     std::ignore = length;
-    qDebug() << QString("onNgcGroupCustomPrivatePacket:peer=") << peer_id << QString("length=") << length;
+    qDebug() << QString("onNgcGroupCustomPrivatePacket:group_number=") << group_number << "peer=" << peer_id << QString("length=") << length;
+
+
+    Tox_Err_Group_Self_Query error;
+    uint32_t res = tox_group_self_get_peer_id(tox, group_number, &error);
+
+    if (error != TOX_ERR_GROUP_SELF_QUERY_OK)
+    {
+        qDebug() << QString("onNgcGroupCustomPrivatePacket:group_number=") << group_number
+            << "peer=" << peer_id << QString("error=") << error;
+        return;
+    }
+
+    if (res == peer_id)
+    {
+        // HINT: ignore own packets
+        qDebug() << QString("onNgcGroupCustomPrivatePacket:group_number=") << group_number
+            << "peer=" << peer_id << QString("ignoring own packet");
+        return;
+    }
+
+    const size_t TOX_MAX_NGC_FILE_AND_HEADER_SIZE = 37000;
+    const size_t header = 6 + 1 + 1;
+    if ((length > TOX_MAX_NGC_FILE_AND_HEADER_SIZE) || (length < header))
+    {
+        qDebug() << QString("onNgcGroupCustomPrivatePacket: data length has wrong size:") << length;
+        return;
+    }
+
+        if (
+            (data[0] == 0x66) &&
+            (data[1] == 0x77) &&
+            (data[2] == 0x88) &&
+            (data[3] == 0x11) &&
+            (data[4] == 0x34) &&
+            (data[5] == 0x35))
+        {
+            if ((data[6] == 0x1) && (data[7] == 0x1))
+            {
+                qDebug() << QString("onNgcGroupCustomPrivatePacket: got ngch_request");
+                Tox_Err_Group_State_Queries error2;
+                Tox_Group_Privacy_State privacy_state =
+                    tox_group_get_privacy_state(tox, group_number, &error2);
+                if (error2 != TOX_ERR_GROUP_STATE_QUERIES_OK)
+                {
+                    qDebug() << QString("onNgcGroupCustomPrivatePacket: tox_group_get_privacy_state: error=") << error2;
+                    return;
+                }
+
+                if (privacy_state == TOX_GROUP_PRIVACY_STATE_PUBLIC)
+                {
+                    qDebug() << QString("onNgcGroupCustomPrivatePacket:sync_history:peer=") << peer_id;
+                    auto peerPk = core->getGroupPeerPk((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id);
+                    emit core->groupSyncHistoryReqReceived(
+                        (Settings::NGC_GROUPNUM_OFFSET + group_number),
+                        peer_id, peerPk);
+                }
+                else
+                {
+                    qDebug() << QString("onNgcGroupCustomPrivatePacket: only sync history for public groups!");
+                }
+            }
+            else if ((data[6] == 0x1) && (data[7] == 0x2))
+            {
+                const int header_syncmsg = 6 + 1 + 1 + 4 + 32 + 4 + 25;
+                if (length >= (header_syncmsg + 1))
+                {
+                    qDebug() << QString("onNgcGroupCustomPrivatePacket: got ngch_syncmsg");
+                    // TODO: write me // handle_incoming_sync_group_message(group_number, peer_id, data, length);
+                }
+            }
+            else if ((data[6] == 0x1) && (data[7] == 0x3))
+            {
+                qDebug() << QString("onNgcGroupCustomPrivatePacket: got ngch_syncfile:A");
+                const int header_syncfile = 6 + 1 + 1 + 32 + 32 + 4 + 25 + 255;
+                if (length >= (header_syncfile + 1))
+                {
+                    qDebug() << QString("onNgcGroupCustomPrivatePacket: got ngch_syncfile:B");
+                    // TODO: write me // handle_incoming_sync_group_file(group_number, peer_id, data, length);
+                }
+            }
+        }
 }
 
 void Core::onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, Tox_Message_Type type,
@@ -910,7 +993,7 @@ void Core::onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, Tox_Messa
         QString message_text = ToxString((cMessage + 9), (length - 9)).getQString();
         QString wrapped_message = conf_msgid.toUpper().rightJustified(8, '0') + QString(":") + message_text;
         // qDebug() << QString("onGroupMessage:wrapped_message:") << wrapped_message;
-        emit core->groupMessageReceived(groupId, peerId, wrapped_message, isAction,
+        emit core->groupMessageReceived(groupId, peerId, wrapped_message, isAction, false,
             static_cast<int>(Widget::MessageHasIdType::CONF_MSG_ID));
     } else {
         qWarning() << QString("onGroupMessage:group message length from tox less than 10. length:") << length;

@@ -91,6 +91,8 @@ ChatHistory::ChatHistory(Chat& chat_, History* history_, const ICoreIdHandler& c
             &ChatHistory::onPushtokenPing);
     connect(&messageDispatcher, &IMessageDispatcher::messageBroken, this,
             &ChatHistory::onMessageBroken);
+    connect(&messageDispatcher, &IMessageDispatcher::groupSyncHistReqRecv, this,
+            &ChatHistory::onGroupSyncHistReqRecv);
 
     if (canUseHistory()) {
         // Defer messageSent callback until we finish firing off all our unsent messages.
@@ -279,11 +281,27 @@ void ChatHistory::onMessageReceived(const ToxPk& sender, const Message& message,
             content = ChatForm::ACTION_PREFIX + content;
         }
 
+        qDebug() << "ChatHistory::onMessageReceived: message.isPrivate:" << message.isPrivate;
+
         history->addNewMessage(chatId, content, sender, message.timestamp, true,
-            message.extensionSet, displayName, {}, hasIdType);
+            message.extensionSet, displayName, {}, hasIdType, message.isPrivate);
     }
 
     sessionChatLog.onMessageReceived(sender, message, hasIdType);
+}
+
+void ChatHistory::onGroupSyncHistReqRecv(const ToxPk& sender, int groupnumber, int peernumber)
+{
+    std::ignore = sender;
+    std::ignore = groupnumber;
+    std::ignore = peernumber;
+
+    if (canUseHistory()) {
+        auto& chatId = chat.getPersistentId();
+        qDebug() << "ChatHistory::onGroupSyncHistReqRecv:";
+        const QDateTime _130_min_back_date = QDateTime::currentDateTime().addSecs(-(130 * 60)); // HINT: max. 130 minutes history
+        history->getGroupMessagesXMinutesBack(chatId, _130_min_back_date, sender, groupnumber, peernumber);
+    }
 }
 
 void ChatHistory::onPushtokenReceived(const ToxPk& sender, const QString& pushtoken)
@@ -411,7 +429,7 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
             // we hit IMessageDispatcher's signals which history listens for.
             // Items added to history have already been sent so we know they already
             // reflect what was sent/received.
-            auto processedMessage = Message{isAction, messageContent, message.timestamp, {}, {}, QString("")};
+            auto processedMessage = Message{isAction, messageContent, message.timestamp, {}, {}, QString(""), false};
 
             auto dispatchedMessageIt =
                 std::find_if(dispatchedMessageRowIdMap.begin(), dispatchedMessageRowIdMap.end(),

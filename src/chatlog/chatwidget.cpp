@@ -125,7 +125,7 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
     } else {
         qDebug() << QString("renderMessageRaw:chatMessage:FALSE");
 
-        if ((chatLogMessage.message.id_or_hash.size() > 32) && (chatLogMessage.message.content == "___"))
+        if ((chatLogMessage.message.id_or_hash.size() > 8) && (chatLogMessage.message.content == "___"))
         {
             QByteArray image_data_bytes = QByteArray::fromHex(chatLogMessage.message.id_or_hash.toLatin1());
             QPixmap pixmap_;

@@ -186,8 +186,9 @@ signals:
 
     void emptyGroupCreated(int groupnumber, const GroupId groupId, const QString& title = QString());
     void groupInviteReceived(const GroupInvite& inviteInfo);
-    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction, const int hasIdType = 0);
+    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction, bool isPrivate = false, const int hasIdType = 0);
     void groupMessageReceivedImage(int groupnumber, int peernumber, const uint8_t *data, size_t length, bool isAction, const int hasIdType = 0);
+    void groupSyncHistoryReqReceived(int groupnumber, int peernumber, ToxPk peerPk);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void groupPeerlistChanged(int groupnumber);
     void groupPeerNameChanged(int groupnumber, const ToxPk& peerPk, const QString& newName);
@@ -276,6 +277,7 @@ private:
     {
         void operator()(Tox* tox_)
         {
+            // TODO: this should be called here somehow --> // settings.setToxcore(nullptr);
             tox_kill(tox_);
         }
     };

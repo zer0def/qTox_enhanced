@@ -57,6 +57,7 @@ struct Message
     ExtensionSet extensionSet;
     std::vector<MessageMetadata> metadata;
     QString id_or_hash;
+    bool isPrivate;
 };
 
 
@@ -113,7 +114,7 @@ public:
     MessageProcessor(const SharedParams& sharedParams_);
 
     std::vector<Message> processOutgoingMessage(bool isAction, const QString& content, ExtensionSet extensions, bool is_friend_message = false);
-    Message processIncomingCoreMessage(bool isAction, const QString& message);
+    Message processIncomingCoreMessage(bool isAction, const QString& message, bool isPrivate = false);
     Message processIncomingExtMessage(const QString& content);
 
     /**

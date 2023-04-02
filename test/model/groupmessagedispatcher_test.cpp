@@ -118,8 +118,9 @@ private slots:
         outgoingMessages.erase(it);
     }
 
-    void onMessageReceived(const ToxPk& sender, Message message)
+    void onMessageReceived(const ToxPk& sender, Message message, int hasIdType)
     {
+        std::ignore = hasIdType;
         std::ignore = sender;
         receivedMessages.push_back(std::move(message));
     }
@@ -189,7 +190,7 @@ void TestGroupMessageDispatcher::testSignals()
 
     // If signals are emitted correctly we should have one message in our received message buffer
     QVERIFY(receivedMessages.empty());
-    groupMessageDispatcher->onMessageReceived(ToxPk(), false, "test2");
+    groupMessageDispatcher->onMessageReceived(ToxPk(), false, false, "test2");
 
     QVERIFY(!receivedMessages.empty());
     QVERIFY(receivedMessages.front().isAction == false);
@@ -234,11 +235,11 @@ void TestGroupMessageDispatcher::testEmptyGroup()
 void TestGroupMessageDispatcher::testSelfReceive()
 {
     uint8_t selfId[ToxPk::size] = {0};
-    groupMessageDispatcher->onMessageReceived(ToxPk(selfId), false, "Test");
+    groupMessageDispatcher->onMessageReceived(ToxPk(selfId), false, false, "Test");
     QVERIFY(receivedMessages.size() == 0);
 
     uint8_t id[ToxPk::size] = {1};
-    groupMessageDispatcher->onMessageReceived(ToxPk(id), false, "Test");
+    groupMessageDispatcher->onMessageReceived(ToxPk(id), false, false, "Test");
     QVERIFY(receivedMessages.size() == 1);
 }
 
@@ -249,11 +250,11 @@ void TestGroupMessageDispatcher::testBlacklist()
 {
     uint8_t id[ToxPk::size] = {1};
     auto otherPk = ToxPk(id);
-    groupMessageDispatcher->onMessageReceived(otherPk, false, "Test");
+    groupMessageDispatcher->onMessageReceived(otherPk, false, false, "Test");
     QVERIFY(receivedMessages.size() == 1);
 
     groupSettings->setBlackList({otherPk.toString()});
-    groupMessageDispatcher->onMessageReceived(otherPk, false, "Test");
+    groupMessageDispatcher->onMessageReceived(otherPk, false, false, "Test");
     QVERIFY(receivedMessages.size() == 1);
 }
 

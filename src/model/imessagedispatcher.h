@@ -87,4 +87,6 @@ signals:
     void messageComplete(DispatchedMessageId id);
 
     void messageBroken(DispatchedMessageId id, BrokenMessageReason reason);
+
+    void groupSyncHistReqRecv(ToxPk const& sender, int groupnumber, int peernumber);
 };

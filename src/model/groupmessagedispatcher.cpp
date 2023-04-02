@@ -83,7 +83,7 @@ GroupMessageDispatcher::sendExtendedMessage(const QString& content, ExtensionSet
  * @param[in] isAction True if is action
  * @param[in] content Message content
  */
-void GroupMessageDispatcher::onMessageReceived(const ToxPk& sender, bool isAction, QString const& content, const int hasIdType)
+void GroupMessageDispatcher::onMessageReceived(const ToxPk& sender, bool isAction, bool isPrivate, QString const& content, const int hasIdType)
 {
     bool isSelf = sender == idHandler.getSelfPublicKey();
 
@@ -96,5 +96,13 @@ void GroupMessageDispatcher::onMessageReceived(const ToxPk& sender, bool isActio
         return;
     }
 
-    emit messageReceived(sender, processor.processIncomingCoreMessage(isAction, content), hasIdType);
+    qDebug() << "onGroupMessageReceived: isPrivate:" << isPrivate;
+
+    emit messageReceived(sender, processor.processIncomingCoreMessage(isAction, content, isPrivate), hasIdType);
+}
+
+void GroupMessageDispatcher::onGroupSyncHistoryReqRecv(const ToxPk& sender, int groupnumber, int peernumber)
+{
+    qDebug() << "onGroupSyncHistoryReqRecv:";
+    emit groupSyncHistReqRecv(sender, groupnumber, peernumber);
 }

@@ -734,6 +734,7 @@ void Widget::onCoreChanged(Core& core_)
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupMessageReceivedImage, this, &Widget::onGroupMessageReceivedImage);
+    connect(core, &Core::groupSyncHistoryReqReceived, this, &Widget::onGroupSyncHistoryReqReceived);
     connect(core, &Core::groupPeerlistChanged, this, &Widget::onGroupPeerlistChanged);
     connect(core, &Core::groupPeerNameChanged, this, &Widget::onGroupPeerNameChanged);
     connect(core, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
@@ -2064,12 +2065,12 @@ void Widget::onGroupInviteAccepted(const GroupInvite& inviteInfo)
 }
 
 void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QString& message,
-                                    bool isAction, const int hasIdType)
+                                    bool isAction, bool isPrivate, const int hasIdType)
 {
     const GroupId& groupId = groupList->id2Key(groupnumber);
     assert(groupList->findGroup(groupId));
     ToxPk author = core->getGroupPeerPk(groupnumber, peernumber);
-    groupMessageDispatchers[groupId]->onMessageReceived(author, isAction, message, hasIdType);
+    groupMessageDispatchers[groupId]->onMessageReceived(author, isAction, isPrivate, message, hasIdType);
 }
 
 void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const uint8_t *image_data,
@@ -2097,8 +2098,16 @@ void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const 
         // HINT: WEBP image could be loaded OK, so save hex data into DB
         //       add message even if image could not be loaded
         QString message = QString::fromUtf8(image_data_bytes.toHex()).toUpper().rightJustified((length * 2), '0') + QString(":") + QString("___");
-        groupMessageDispatchers[groupId]->onMessageReceived(author, isAction, message, hasIdType);
+        groupMessageDispatchers[groupId]->onMessageReceived(author, isAction, false, message, hasIdType);
     //}
+}
+
+void Widget::onGroupSyncHistoryReqReceived(int groupnumber, int peernumber, ToxPk peerPk)
+{
+    const GroupId& groupId = groupList->id2Key(groupnumber);
+    assert(groupList->findGroup(groupId));
+
+    groupMessageDispatchers[groupId]->onGroupSyncHistoryReqRecv(peerPk, groupnumber, peernumber);
 }
 
 void Widget::onGroupPeerlistChanged(uint32_t groupnumber)

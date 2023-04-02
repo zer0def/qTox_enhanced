@@ -636,7 +636,7 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
     addChatIdSubQuery(queryText, boundParams, chatId);
 
     queryText += QString(" AND timestamp >= %1").arg(date.toMSecsSinceEpoch());
-    queryText += QString(" AND text_messages.private = '0'").arg(date.toMSecsSinceEpoch());
+    queryText += QString(" AND text_messages.private = '0'");
     queryText += QString(" order by timestamp ASC;");
 
     qDebug() << QString("getGroupMessagesXMinutesBack:SQL:") << queryText;
@@ -770,7 +770,7 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
                     data_buf_cur = data_buf_cur + 32;
                     // -----------------------------------------------------------
                     // timestamp // (unix timestamp 4 bytes)
-                    uint32_t timestamp_c = static_cast<uint32_t>(timestamp.toSecsSinceEpoch());
+                    uint32_t timestamp_c = static_cast<uint32_t>(timestamp.toMSecsSinceEpoch() / 1000);
                     uint32_t timestamp_unix_buf;
                     xnet_pack_u32_hist(reinterpret_cast<uint8_t*>(&timestamp_unix_buf), timestamp_c);
                     memcpy(data_buf_cur, &timestamp_unix_buf, 4);

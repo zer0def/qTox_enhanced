@@ -182,9 +182,11 @@ void AppManager::preConstructionInitialization()
 
 int AppManager::run()
 {
+#if QT_VERSION < QT_VERSION_CHECK( 5, 10, 0 )
     // seeding random number generator once
     qsrand(QDateTime::currentMSecsSinceEpoch()%UINT_MAX);
     qDebug() << "seending random number generator ...";
+#endif
 
 #if defined(Q_OS_UNIX)
     // PosixSignalNotifier is used only for terminating signals,

@@ -182,6 +182,10 @@ void AppManager::preConstructionInitialization()
 
 int AppManager::run()
 {
+    // seeding random number generator once
+    qsrand(QDateTime::currentMSecsSinceEpoch()%UINT_MAX);
+    qDebug() << "seending random number generator ...";
+
 #if defined(Q_OS_UNIX)
     // PosixSignalNotifier is used only for terminating signals,
     // so it's connected directly to quit() without any filtering.

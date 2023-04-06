@@ -54,6 +54,8 @@
 
 #include <tox/tox.h>
 
+#include <sodium.h>
+
 #include <algorithm>
 #include <cassert>
 #include <chrono>
@@ -750,8 +752,9 @@ QString Core::GetRandomGroupusername() const
 	};
 
 #if QT_VERSION < QT_VERSION_CHECK( 5, 10, 0 )
-    int index_first_name = qrand() % name0_list.size();
-    int index_last_name = qrand() % name1_list.size();
+    auto index_first_name = randombytes_uniform(name0_list.size());
+    auto index_last_name = randombytes_uniform(name1_list.size());
+    // qDebug() << QString("GetRandomGroupusername:") << name0_list.size() << name1_list.size() << index_first_name << index_last_name;
 #else
     int index_first_name = QRandomGenerator::global()->generate() % name0_list.size();
     int index_last_name = QRandomGenerator::global()->generate() % name1_list.size();
@@ -770,8 +773,6 @@ void Core::onNgcInvite(Tox* tox, uint32_t friendId, const uint8_t* invite_data, 
     Core* core = static_cast<Core*>(vCore);
     qDebug() << QString("NGC group invite by %1").arg(friendId);
 
-    // auto rnd_letters = core->GetRandomString(5);
-    // auto user_name = QString("user ") + rnd_letters;
     auto user_name = core->GetRandomGroupusername();
     auto user_name_len = user_name.toUtf8().size();
 
@@ -1153,12 +1154,9 @@ void Core::requestNgc(const QString& ngcId, const QString& message)
 
     QByteArray ngcIdBytes = QByteArray::fromHex(ngcId.toLatin1());
 
-    // auto rnd_letters = GetRandomString(5);
-    // auto user_name = QString("user ") + rnd_letters;
     auto user_name = GetRandomGroupusername();
-
     auto user_name_len = user_name.toUtf8().size();
-    qDebug() << QString("requestNgc join:my peer name=") << user_name << QString("user_name_len=") << user_name_len;
+    qDebug() << QString("requestNgc join:1:my peer name=") << user_name << QString("user_name_len=") << user_name_len;
 
     Tox_Err_Group_Join error;
     // TODO: add password if needed

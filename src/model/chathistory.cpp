@@ -281,7 +281,7 @@ void ChatHistory::onMessageReceived(const ToxPk& sender, const Message& message,
             content = ChatForm::ACTION_PREFIX + content;
         }
 
-        qDebug() << "ChatHistory::onMessageReceived: message.isPrivate:" << message.isPrivate;
+        // qDebug() << "ChatHistory::onMessageReceived: message.isPrivate:" << message.isPrivate;
 
         history->addNewMessage(chatId, content, sender, message.timestamp, true,
             message.extensionSet, displayName, {}, hasIdType, message.isPrivate);
@@ -396,9 +396,9 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
     // We know that both history and us have a start index of 0 so the type
     // conversion should be safe
     assert(getFirstIdx() == ChatLogIdx(0));
-    qDebug() << "loadHistoryIntoSessionChatLog:getMessagesForChat:START";
+    // qDebug() << "loadHistoryIntoSessionChatLog:getMessagesForChat:START";
     auto messages = history->getMessagesForChat(chat.getPersistentId(), start.get(), end.get());
-    qDebug() << "loadHistoryIntoSessionChatLog:getMessagesForChat:DONE";
+    // qDebug() << "loadHistoryIntoSessionChatLog:getMessagesForChat:DONE";
 
     assert(messages.size() == static_cast<int>(end.get() - start.get()));
     ChatLogIdx nextIdx = start;
@@ -420,8 +420,8 @@ void ChatHistory::loadHistoryIntoSessionChatLog(ChatLogIdx start) const
 
             auto isAction = handleActionPrefix(messageContent);
 
-            qDebug() << "loadHistoryIntoSessionChatLog:ngcMsgid=" << message.ngcMsgid.left(5) << "messageContent:" << messageContent;
-            qDebug() << "loadHistoryIntoSessionChatLog:dispName=" << message.dispName << "messageContent:" << messageContent;
+            // qDebug() << "loadHistoryIntoSessionChatLog:ngcMsgid=" << message.ngcMsgid.left(5) << "messageContent:" << messageContent;
+            // qDebug() << "loadHistoryIntoSessionChatLog:dispName=" << message.dispName << "messageContent:" << messageContent;
 
             // It's okay to skip the message processor here. The processor is
             // meant to convert between boundaries of our internal

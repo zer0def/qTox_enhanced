@@ -109,22 +109,17 @@ void renderMessageRaw(const QString& pubkey, const QString& displayName, bool is
     // ChatLine a QObject which I didn't think was worth it.
     auto chatMessage = static_cast<ChatMessage*>(chatLine.get());
 
-    qDebug() << QString("renderMessageRaw:id_or_hash:")
-        << chatLogMessage.message.id_or_hash.left(5)
-        << "content:" << chatLogMessage.message.content;
+    // qDebug() << QString("renderMessageRaw:id_or_hash:")
+    //     << chatLogMessage.message.id_or_hash.left(5)
+    //     << "content:" << chatLogMessage.message.content;
 
     if (chatMessage) {
-        qDebug() << QString("renderMessageRaw:chatMessage:true");
         if (chatLogMessage.state == MessageState::complete) {
-            qDebug() << QString("renderMessageRaw:chatMessage:true:1");
             chatMessage->markAsDelivered(chatLogMessage.message.timestamp);
         } else if (chatLogMessage.state == MessageState::broken) {
-            qDebug() << QString("renderMessageRaw:chatMessage:true:2");
             chatMessage->markAsBroken();
         }
     } else {
-        qDebug() << QString("renderMessageRaw:chatMessage:FALSE");
-
         if ((chatLogMessage.message.id_or_hash.size() > 8) && (chatLogMessage.message.content == "___"))
         {
             QByteArray image_data_bytes = QByteArray::fromHex(chatLogMessage.message.id_or_hash.toLatin1());
@@ -1497,7 +1492,7 @@ void ChatWidget::renderItem(const ChatLogItem& item, bool hideName, bool coloriz
         // HINT: ***********render message**********
         // HINT: ***********render message**********
         // HINT: ***********render message**********
-        qDebug() << QString("renderItem:id_or_hash") << chatLogMessage.message.id_or_hash.left(5);
+        // qDebug() << QString("renderItem:id_or_hash") << chatLogMessage.message.id_or_hash.left(5);
         renderMessageRaw(sender.toString(), item.getDisplayName(), isSelf, colorizeNames_, chatLogMessage,
             chatMessage, documentCache, smileyPack, settings, style);
 

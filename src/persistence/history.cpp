@@ -122,7 +122,7 @@ generateNewTextMessageQueries(const ChatId& chatId, const QString& message, cons
 {
     QVector<RawDatabase::Query> queries;
 
-    qDebug() << QString("generateNewTextMessageQueries:hasIdType:") << hasIdType;
+    // qDebug() << QString("generateNewTextMessageQueries:hasIdType:") << hasIdType;
 
     queries += generateEnsurePkInChats(chatId);
     queries += generateEnsurePkInAuthors(sender);
@@ -150,17 +150,17 @@ generateNewTextMessageQueries(const ChatId& chatId, const QString& message, cons
         boundParams += hexstr.toUtf8();
         if (isPrivate)
         {
-            qDebug() << QString("generateNewTextMessageQueries:isPrivate=true:") << isPrivate;
+            // qDebug() << QString("generateNewTextMessageQueries:isPrivate=true:") << isPrivate;
             queryString += ", '1'";
         }
         else
         {
-            qDebug() << QString("generateNewTextMessageQueries:isPrivate=false:") << isPrivate;
+            // qDebug() << QString("generateNewTextMessageQueries:isPrivate=false:") << isPrivate;
             queryString += ", '0'";
         }
         queryString += ");";
 
-        qDebug() << QString("generateNewTextMessageQueries:SQL:") << queryString;
+        // qDebug() << QString("generateNewTextMessageQueries:SQL:") << queryString;
 
     } else if (hasIdType == 3) { // static_cast<int>(Widget::MessageHasIdType::MSGV3_ID)
         QString hexstr = message.section(':', 0, 0);
@@ -592,7 +592,7 @@ void History::addNewMessage(const ChatId& chatId, const QString& message, const 
         return;
     }
 
-    qDebug() << "History::addNewMessage: isPrivate:" << isPrivate;
+    // qDebug() << "History::addNewMessage: isPrivate:" << isPrivate;
 
     db->execLater(generateNewTextMessageQueries(chatId, message, sender, time, isDelivered,
                                                 extensionSet, dispName, insertIdCallback, hasIdType, isPrivate));
@@ -639,9 +639,9 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
     queryText += QString(" AND text_messages.private = '0'");
     queryText += QString(" order by timestamp ASC;");
 
-    qDebug() << QString("getGroupMessagesXMinutesBack:SQL:") << queryText;
-    const bool isGuiThread2 = QThread::currentThread() == QCoreApplication::instance()->thread();
-    qDebug() << QString("getGroupMessagesXMinutesBack:THREAD:001:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread2;
+    // qDebug() << QString("getGroupMessagesXMinutesBack:SQL:") << queryText;
+    // const bool isGuiThread2 = QThread::currentThread() == QCoreApplication::instance()->thread();
+    // qDebug() << QString("getGroupMessagesXMinutesBack:THREAD:001:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread2;
 
     Tox* toxcore = settings.getToxcore();
     QList<HistMessage> messages;
@@ -681,30 +681,30 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
             const auto chat_uuid__str = QString::fromUtf8(chat_uuid__bin.toHex()).toUpper();
             // ---------------------
 
-            qDebug() << QString("getGroupMessagesXMinutesBack:M:")
-                << "timestamp" << timestamp
-                << "chat_uuid" << chat_uuid__str
-                << "senderKey" << senderKey__str
-                << "messageContent" << messageContent
-                << "senderName" << senderName__str
-                << "ngc_msgid2" << ngc_msgid2__str.left(16)
-                << "msgv3hash" << msgv3hash.left(16)
-                ;
+            // qDebug() << QString("getGroupMessagesXMinutesBack:M:")
+            //     << "timestamp" << timestamp
+            //     << "chat_uuid" << chat_uuid__str
+            //     << "senderKey" << senderKey__str
+            //     << "messageContent" << messageContent
+            //     << "senderName" << senderName__str
+            //     << "ngc_msgid2" << ngc_msgid2__str.left(16)
+            //     << "msgv3hash" << msgv3hash.left(16)
+            //     ;
 
             if ((messageContent == "___") && (ngc_msgid2__str.size() > 8))
             {
                 // HINT: message is a group image
-                qDebug() << QString("getGroupMessagesXMinutesBack:M:__group_image");
+                // qDebug() << QString("getGroupMessagesXMinutesBack:M:__group_image");
             }
             else
             {
                 if (messageContent.size() == 0)
                 {
-                    qDebug() << QString("getGroupMessagesXMinutesBack: messageContent has zero size");
+                    // qDebug() << QString("getGroupMessagesXMinutesBack: messageContent has zero size");
                     break;
                 }
                 // HINT: regular group text message
-                qDebug() << QString("getGroupMessagesXMinutesBack:M:__group_text message");
+                // qDebug() << QString("getGroupMessagesXMinutesBack:M:__group_text message");
 
                 const int delay = 301;
 #if QT_VERSION < QT_VERSION_CHECK( 5, 10, 0 )
@@ -782,11 +782,11 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
                     {
                         const auto senderName__bin_bytes = senderName__str.toUtf8();
                         const int name_in_bytes = senderName__bin_bytes.size();
-                        qDebug() << QString("getGroupMessagesXMinutesBack: senderName__bin_bytes.size():")
-                            << senderName__bin_bytes.size();
+                        // qDebug() << QString("getGroupMessagesXMinutesBack: senderName__bin_bytes.size():")
+                        //     << senderName__bin_bytes.size();
 
-                        qDebug() << QString("getGroupMessagesXMinutesBack:senderName__bin_bytes hex:")
-                            << QString::fromUtf8(senderName__bin_bytes.toHex()).toUpper();
+                        // qDebug() << QString("getGroupMessagesXMinutesBack:senderName__bin_bytes hex:")
+                        //     << QString::fromUtf8(senderName__bin_bytes.toHex()).toUpper();
 
                         const int max_name_bytes = 25;
                         if (name_in_bytes > max_name_bytes)
@@ -811,18 +811,18 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
                     std::ignore = error;
 
                     QByteArray data_buf_bytearray = QByteArray(reinterpret_cast<const char*>(data_buf), data_length);
-                    qDebug() << QString("getGroupMessagesXMinutesBack:send_bytes:") << QString::fromUtf8(data_buf_bytearray.toHex()).toUpper();
+                    // qDebug() << QString("getGroupMessagesXMinutesBack:send_bytes:") << QString::fromUtf8(data_buf_bytearray.toHex()).toUpper();
 
                     if (toxcore != nullptr)
                     {
                         int result = tox_group_send_custom_private_packet(toxcore, (groupnumber - Settings::NGC_GROUPNUM_OFFSET),
                                                                           peernumber, 1, data_buf,
                                                                           data_length, &error);
-
-                        const bool isGuiThread3 = QThread::currentThread() == QCoreApplication::instance()->thread();
-                        qDebug() << QString("getGroupMessagesXMinutesBack:THREAD:002:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread3;
-                        qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:groupnumber:") << groupnumber << "groupnumber_corr:" << (groupnumber - Settings::NGC_GROUPNUM_OFFSET);
-                        qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:result:") << result << "error:" << error;
+                        std::ignore = result;
+                        // const bool isGuiThread3 = QThread::currentThread() == QCoreApplication::instance()->thread();
+                        // qDebug() << QString("getGroupMessagesXMinutesBack:THREAD:002:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread3;
+                        // qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:groupnumber:") << groupnumber << "groupnumber_corr:" << (groupnumber - Settings::NGC_GROUPNUM_OFFSET);
+                        // qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:result:") << result << "error:" << error;
                     }
                     free(data_buf);
 
@@ -1129,14 +1129,14 @@ QList<History::HistMessage> History::getMessagesForChat(const ChatId& chatId, si
             const auto senderKey = ToxPk{(*it++).toByteArray()};
             const auto senderName = QString::fromUtf8((*it++).toByteArray().replace('\0', ""));
             const auto ngc_msgid2 = QString::fromUtf8((*it++).toByteArray().replace('\0', ""));
-            qDebug() << QString("getMessagesForChat:ngc_msgid:") << ngc_msgid2.left(16);
+            // qDebug() << QString("getMessagesForChat:ngc_msgid:") << ngc_msgid2.left(16);
             if (messageContent.size() == 0)
             {
                 messageContent = "___";
             }
             HistMessage h = HistMessage(id, messageState, requiredExtensions, timestamp,
                             chatId.clone(), senderName, senderKey, messageContent, ngc_msgid2);
-            qDebug() << QString("getMessagesForChat:ngcMsgid:") << h.ngcMsgid.left(16);
+            // qDebug() << QString("getMessagesForChat:ngcMsgid:") << h.ngcMsgid.left(16);
             messages += h;
             break;
         }

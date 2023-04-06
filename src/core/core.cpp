@@ -867,8 +867,8 @@ void Core::onNgcGroupMessage(Tox* tox, uint32_t group_number, uint32_t peer_id, 
     // qDebug() << "msgIdhash:" << QString::fromUtf8(msgIdhash.toHex()).toUpper();
     msg = QString::fromUtf8(msgIdhash.toHex()).toUpper().rightJustified(8, '0') + QString(":") + msg;
 
-    const bool isGuiThread = QThread::currentThread() == QCoreApplication::instance()->thread();
-    qDebug() << QString("onNgcGroupMessage:THREAD:TOX:010:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread;
+    // const bool isGuiThread = QThread::currentThread() == QCoreApplication::instance()->thread();
+    // qDebug() << QString("onNgcGroupMessage:THREAD:TOX:010:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread;
 
     auto peerPk = core->getGroupPeerPk((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id);
     emit core->groupMessageReceived((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id, msg,

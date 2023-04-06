@@ -96,13 +96,13 @@ void GroupMessageDispatcher::onMessageReceived(const ToxPk& sender, bool isActio
         return;
     }
 
-    qDebug() << "onGroupMessageReceived: isPrivate:" << isPrivate;
+    // qDebug() << "onGroupMessageReceived: isPrivate:" << isPrivate;
 
     emit messageReceived(sender, processor.processIncomingCoreMessage(isAction, content, isPrivate), hasIdType);
 }
 
 void GroupMessageDispatcher::onGroupSyncHistoryReqRecv(const ToxPk& sender, int groupnumber, int peernumber)
 {
-    qDebug() << "onGroupSyncHistoryReqRecv:";
+    // qDebug() << "onGroupSyncHistoryReqRecv:";
     emit groupSyncHistReqRecv(sender, groupnumber, peernumber);
 }

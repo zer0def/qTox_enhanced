@@ -493,6 +493,7 @@ void Profile::onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QB
  */
 bool Profile::saveToxSave(QByteArray data)
 {
+    qDebug() << "Profile::saveToxSave:START";
     assert(!isRemoved);
     ProfileLocker::assertLock(paths);
     assert(ProfileLocker::getCurLockName() == name);
@@ -524,6 +525,8 @@ bool Profile::saveToxSave(QByteArray data)
         qCritical() << "Failed to write, can't save!";
         return false;
     }
+
+    qDebug() << "Profile::saveToxSave:END";
     return true;
 }
 

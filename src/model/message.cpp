@@ -137,7 +137,7 @@ Message MessageProcessor::processIncomingCoreMessage(bool isAction, QString cons
     ret.timestamp = timestamp;
     ret.isPrivate = isPrivate;
 
-    qDebug() << "processIncomingCoreMessage: isPrivate:" << isPrivate;
+    // qDebug() << "processIncomingCoreMessage: isPrivate:" << isPrivate;
 
     if (detectingMentions) {
         auto nameMention = sharedParams.getNameMention();

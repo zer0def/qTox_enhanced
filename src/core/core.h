@@ -223,6 +223,7 @@ private:
     static void onGroupInvite(Tox* tox, uint32_t friendId, Tox_Conference_Type type,
                               const uint8_t* cookie, size_t length, void* vCore);
     QString GetRandomString(int randomStringLength) const;
+    QString GetRandomGroupusername() const;
     static void onNgcInvite(Tox* tox, uint32_t friendId, const uint8_t* invite_data, size_t length,
                        const uint8_t *group_name, size_t group_name_length, void* vCore);
 

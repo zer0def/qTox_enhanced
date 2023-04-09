@@ -178,7 +178,7 @@ void Friend::setStatus(Status::Status s)
     const auto startNegotating = friendStatus == Status::Status::Offline;
 
     if (startNegotating) {
-        qDebug() << "Starting negotiation with friend " << friendId;
+        // qDebug() << "Starting negotiation with friend " << friendId;
         isNegotiating = true;
     }
 
@@ -216,7 +216,7 @@ void Friend::setExtendedMessageSupport(bool supported)
 void Friend::setConnectionStatusFull(const uint32_t connection_status_full)
 {
     connectionStatusFull = connection_status_full;
-    qDebug() << "setConnectionStatusFull:" << connectionStatusFull;
+    // qDebug() << "setConnectionStatusFull:" << connectionStatusFull;
     emit statusChangedFull(friendPk, connectionStatusFull);
 }
 

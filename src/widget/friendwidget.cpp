@@ -358,7 +358,7 @@ void FriendWidget::updateStatusLight()
     }
     else
     {
-        qDebug() << "updateStatusLight:status full:" << frnd->getConnectionStatusFull();
+        // qDebug() << "updateStatusLight:status full:" << frnd->getConnectionStatusFull();
         if (frnd->getConnectionStatusFull() == 1) // 1 == TOX_CONNECTION_TCP
         {
             if (event)

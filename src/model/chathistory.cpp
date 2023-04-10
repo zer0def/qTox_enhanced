@@ -23,6 +23,8 @@
 #include "src/widget/widget.h"
 #include "src/widget/form/chatform.h"
 
+#include <thread>
+
 namespace {
 /**
  * @brief Determines if the given idx needs to be loaded from history
@@ -297,10 +299,17 @@ void ChatHistory::onGroupSyncHistReqRecv(const ToxPk& sender, int groupnumber, i
     std::ignore = peernumber;
 
     if (canUseHistory()) {
-        auto& chatId = chat.getPersistentId();
-        qDebug() << "ChatHistory::onGroupSyncHistReqRecv:";
-        const QDateTime _130_min_back_date = QDateTime::currentDateTime().addSecs(-(130 * 60)); // HINT: max. 130 minutes history
-        history->getGroupMessagesXMinutesBack(chatId, _130_min_back_date, sender, groupnumber, peernumber);
+        const ChatId& chatId = chat.getPersistentId();
+        const QByteArray& chatIdByteArray = chatId.getByteArray();
+        // const bool isGuiThread = QThread::currentThread() == QCoreApplication::instance()->thread();
+        // qDebug() << QString("onGroupSyncHistReqRecv:THREAD:008:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread;
+        auto t_sync_history = [](History* history_, const QByteArray& chatIdByteArray_, const ToxPk& sender_, int groupnumber_, int peernumber_)
+        {
+            const QDateTime _130_min_back_date = QDateTime::currentDateTime().addSecs(-(130 * 60)); // HINT: max. 130 minutes history
+            history_->getGroupMessagesXMinutesBack(chatIdByteArray_, _130_min_back_date, sender_, groupnumber_, peernumber_);
+        };
+        std::thread t_it_thread(t_sync_history, history, chatIdByteArray, sender, groupnumber, peernumber);
+        t_it_thread.detach();
     }
 }
 

@@ -613,7 +613,7 @@ static size_t xnet_pack_u32_hist(uint8_t *bytes, uint32_t v)
     return p - bytes;
 }
 
-QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& chatId, const QDateTime& date,
+QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const QByteArray& chatIdByteArray, const QDateTime& date,
                     const ToxPk& sender, int groupnumber, int peernumber)
 {
     if (historyAccessBlocked()) {
@@ -633,8 +633,8 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
                                 "LEFT JOIN authors ON aliases.owner = authors.id "
                                 "WHERE history.chat_id = ");
     QVector<QByteArray> boundParams;
-    addChatIdSubQuery(queryText, boundParams, chatId);
-
+    boundParams.append(chatIdByteArray);
+    queryText += "(SELECT id FROM chats WHERE uuid = ?)";
     queryText += QString(" AND timestamp >= %1").arg(date.toMSecsSinceEpoch());
     queryText += QString(" AND text_messages.private = '0'");
     queryText += QString(" order by timestamp ASC;");
@@ -645,7 +645,7 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
 
     Tox* toxcore = settings.getToxcore();
     QList<HistMessage> messages;
-    auto rowCallback = [&chatId, &messages, &toxcore, groupnumber, peernumber](const QVector<QVariant>& row) {
+    auto rowCallback = [&toxcore, groupnumber, peernumber](const QVector<QVariant>& row) {
         auto it = row.begin();
 
         constexpr auto messageOffset = 3;
@@ -807,30 +807,25 @@ QList<History::HistMessage> History::getGroupMessagesXMinutesBack(const ChatId& 
                                 messageContent.toUtf8().size());
                     // -----------------------------------------------------------
                     // now send the whole thing
-                    Tox_Err_Group_Send_Custom_Private_Packet error;
-                    std::ignore = error;
-
-                    QByteArray data_buf_bytearray = QByteArray(reinterpret_cast<const char*>(data_buf), data_length);
+                    //
+                    // QByteArray data_buf_bytearray = QByteArray(reinterpret_cast<const char*>(data_buf), data_length);
                     // qDebug() << QString("getGroupMessagesXMinutesBack:send_bytes:") << QString::fromUtf8(data_buf_bytearray.toHex()).toUpper();
-
                     if (toxcore != nullptr)
                     {
+                        const bool isGuiThread3 = QThread::currentThread() == QCoreApplication::instance()->thread();
+                        qDebug() << QString("getGroupMessagesXMinutesBack:THREAD:002:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread3;
+                        // HINT: wait "n" milliseconds before sending the sync message
+                        QThread::msleep(n);
+                        Tox_Err_Group_Send_Custom_Private_Packet error;
+                        std::ignore = error;
                         int result = tox_group_send_custom_private_packet(toxcore, (groupnumber - Settings::NGC_GROUPNUM_OFFSET),
                                                                           peernumber, 1, data_buf,
                                                                           data_length, &error);
                         std::ignore = result;
-                        // const bool isGuiThread3 = QThread::currentThread() == QCoreApplication::instance()->thread();
-                        // qDebug() << QString("getGroupMessagesXMinutesBack:THREAD:002:") << QThread::currentThreadId() << "isGuiThread" << isGuiThread3;
                         // qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:groupnumber:") << groupnumber << "groupnumber_corr:" << (groupnumber - Settings::NGC_GROUPNUM_OFFSET);
                         // qDebug() << QString("getGroupMessagesXMinutesBack:sending_request:result:") << result << "error:" << error;
                     }
                     free(data_buf);
-
-                    if (toxcore != nullptr)
-                    {
-                        // HINT: wait "n" milliseconds before sending the next sync message
-                        QThread::msleep(n);
-                    }
                 }
                 else
                 {

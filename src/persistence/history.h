@@ -153,8 +153,6 @@ public:
             , content(std::move(message))
             , ngcMsgid{ngc_msgid_}
         {
-            // this->ngcMsgid = ngc_msgid_;
-            // qDebug() << "ngcMsgid:" << ngcMsgid.left(5) << "ngc_msgid_:" << ngc_msgid_.left(5) << "dispName:" << dispName;
         }
 
         HistMessage(RowId id_, MessageState state_, QDateTime timestamp_, std::unique_ptr<ChatId> chat_, QString dispName_,
@@ -248,8 +246,7 @@ public:
     size_t getNumMessagesForChat(const ChatId& chatId);
     size_t getNumMessagesForChatBeforeDate(const ChatId& chatId, const QDateTime& date);
     QList<HistMessage> getMessagesForChat(const ChatId& chatId, size_t firstIdx, size_t lastIdx);
-    QList<HistMessage> getGroupMessagesXMinutesBack(const ChatId& chatId, const QDateTime& date, const ToxPk& sender, int groupnumber, int peernumber);
-
+    QList<HistMessage> getGroupMessagesXMinutesBack(const QByteArray& chatIdByteArray, const QDateTime& date, const ToxPk& sender, int groupnumber, int peernumber);
     QList<HistMessage> getUndeliveredMessagesForChat(const ChatId& chatId);
     QDateTime getDateWhereFindPhrase(const ChatId& chatId, const QDateTime& from, QString phrase,
                                      const ParameterSearch& parameter);

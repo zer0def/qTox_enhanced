@@ -19,8 +19,8 @@ set -euo pipefail
 
 QT_MAJOR=5
 QT_MINOR=15
-QT_PATCH=8
-QT_HASH=776a9302c336671f9406a53bd30b8e36f825742b2ec44a57c08217bff0fa86b9
+QT_PATCH=9
+QT_HASH=26d5f36134db03abe4a6db794c7570d729c92a3fc1b0bf9b1c8f86d0573cd02f
 
 source "$(dirname "$(realpath "$0")")/common.sh"
 

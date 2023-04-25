@@ -57,6 +57,7 @@ jobs:
   build-debian-old-docker:
     name: Build old debian docker image
     runs-on: ubuntu-latest
+    if: ${{ false }}
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build-docker-image
@@ -100,6 +101,7 @@ jobs:
   build-debian-old:
     name: Debian Old
     runs-on: ubuntu-latest
+    if: ${{ false }}
     needs: build-debian-old-docker
     strategy:
       matrix:

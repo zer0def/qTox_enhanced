@@ -336,7 +336,13 @@ void CoreAV::process()
 {
     assert(QThread::currentThread() == coreavThread.get());
     toxav_iterate(toxav.get());
-    iterateTimer->start(toxav_iteration_interval(toxav.get()));
+    uint32_t interval = toxav_iteration_interval(toxav.get());
+    if (interval <= 5)
+    {
+        interval = 10;
+    }
+    // qDebug() << "CoreAV:interval:" << interval;
+    iterateTimer->start(interval);
 }
 
 /**

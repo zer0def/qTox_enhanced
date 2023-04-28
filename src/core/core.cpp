@@ -381,12 +381,11 @@ void Core::process()
         tolerance = 3 * CORE_DISCONNECT_TOLERANCE;
     }
 
-    unsigned sleeptime =
-        qMin(tox_iteration_interval(tox.get()), getCoreFile()->corefileIterationInterval());
+    unsigned sleeptime_file = getCoreFile()->corefileIterationInterval();
+    unsigned sleeptime_toxcore = tox_iteration_interval(tox.get());
+    unsigned sleeptime = qMin(sleeptime_toxcore, sleeptime_file);
+    // qDebug() << "Core::process:sleeptime_file:" << sleeptime_file << "sleeptime_toxcore:" << sleeptime_toxcore << "sleeptime:" << sleeptime;
     // TODO: check for active AV calls and lower iteration interval only when calls are active
-    if (sleeptime == 50) {
-        sleeptime = 20;
-    }
     toxTimer->start(sleeptime);
 }
 

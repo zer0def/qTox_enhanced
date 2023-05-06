@@ -64,6 +64,8 @@ fi
 SRCDIR=/qtox
 export CTEST_OUTPUT_ON_FAILURE=1
 
+echo "SANITIZE_ARGS: ""$SANITIZE_ARGS"
+
 if [ $MINIMAL -eq 1 ]; then
     cmake "$SRCDIR" \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \

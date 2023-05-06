@@ -913,8 +913,9 @@ void Core::onNgcGroupCustomPacket(Tox* tox, uint32_t group_number, uint32_t peer
             {
                 // HINT: ok we have a group file
                 auto peerPk = core->getGroupPeerPk((Settings::NGC_GROUPNUM_OFFSET + group_number), peer_id);
+                QByteArray image_data_bytes = QByteArray(reinterpret_cast<const char*>(data + header_len), (length - header_len));
                 emit core->groupMessageReceivedImage((Settings::NGC_GROUPNUM_OFFSET + group_number),
-                    peer_id, (data + header_len),
+                    peer_id, image_data_bytes,
                     (length - header_len), false,
                     static_cast<int>(Widget::MessageHasIdType::NGC_MSG_ID));
             }

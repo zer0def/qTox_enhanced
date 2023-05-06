@@ -207,7 +207,7 @@ public slots:
     void onGroupInviteReceived(const GroupInvite& inviteInfo);
     void onGroupInviteAccepted(const GroupInvite& inviteInfo);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction, bool isPrivate = false, const int hasIdType = 0);
-    void onGroupMessageReceivedImage(int groupnumber, int peernumber, const uint8_t *image_data, size_t length, bool isAction, const int hasIdType = 0);
+    void onGroupMessageReceivedImage(int groupnumber, int peernumber, const QByteArray& image_bytes, size_t length, bool isAction, const int hasIdType = 0);
     void onGroupSyncHistoryReqReceived(int groupnumber, int peernumber, ToxPk peerPk);
     void onGroupPeerlistChanged(uint32_t groupnumber);
     void onGroupPeerNameChanged(uint32_t groupnumber, const ToxPk& peerPk, const QString& newName);

@@ -187,7 +187,7 @@ signals:
     void emptyGroupCreated(int groupnumber, const GroupId groupId, const QString& title = QString());
     void groupInviteReceived(const GroupInvite& inviteInfo);
     void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction, bool isPrivate = false, const int hasIdType = 0);
-    void groupMessageReceivedImage(int groupnumber, int peernumber, const uint8_t *data, size_t length, bool isAction, const int hasIdType = 0);
+    void groupMessageReceivedImage(int groupnumber, int peernumber, const QByteArray& image_bytes, size_t length, bool isAction, const int hasIdType = 0);
     void groupSyncHistoryReqReceived(int groupnumber, int peernumber, ToxPk peerPk);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void groupPeerlistChanged(int groupnumber);

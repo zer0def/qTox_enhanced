@@ -22,6 +22,7 @@
 #include <cassert>
 
 #include <QClipboard>
+#include <QCryptographicHash>
 #include <QDebug>
 #include <QDesktopServices>
 #include <QDesktopWidget>
@@ -2073,7 +2074,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     groupMessageDispatchers[groupId]->onMessageReceived(author, isAction, isPrivate, message, hasIdType);
 }
 
-void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const uint8_t *image_data,
+void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const QByteArray& image_bytes,
                                     size_t length, bool isAction, const int hasIdType)
 {
     const GroupId& groupId = groupList->id2Key(groupnumber);
@@ -2084,17 +2085,20 @@ void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const 
     std::ignore = isAction;
     std::ignore = hasIdType;
 
-    QByteArray image_data_bytes = QByteArray(reinterpret_cast<const char*>(image_data), length);
-    // qDebug() << "onGroupMessageReceivedImage:image_data_bytes:"
-    //    << QString::fromUtf8(image_data_bytes.toHex()).toUpper().rightJustified((length * 2), '0')
+    QByteArray shaBa = QCryptographicHash::hash(image_bytes, QCryptographicHash::Sha256);
+    QString sha256hash = QString::fromUtf8(shaBa.toHex()).toUpper();
+    qDebug() << "onGroupMessageReceivedImage:SHA256:" << sha256hash << "length" << length;
+
+    // qDebug() << "onGroupMessageReceivedImage:image_bytes:"
+    //    << QString::fromUtf8(image_bytes.toHex()).toUpper().rightJustified((length * 2), '0')
     //        << "len:" << length;
 
     QPixmap mpixmap;
-    bool result = mpixmap.loadFromData(image_data_bytes);
+    bool result = mpixmap.loadFromData(image_bytes);
     if (!result)
     {
         qDebug() << "onGroupMessageReceivedImage:loadFromData:trying with hardcoded WEBP type";
-        result = mpixmap.loadFromData(image_data_bytes, "WEBP");
+        result = mpixmap.loadFromData(image_bytes, "WEBP");
     }
     qDebug() << "onGroupMessageReceivedImage:loadFromData:res=" << result;
 
@@ -2102,7 +2106,7 @@ void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const 
     //{
         // HINT: image could be loaded OK, so save hex data into DB
         //       add message even if image could not be loaded
-        QString message = QString::fromUtf8(image_data_bytes.toHex()).toUpper().rightJustified((length * 2), '0') + QString(":") + QString("___");
+        QString message = QString::fromUtf8(image_bytes.toHex()).toUpper().rightJustified((length * 2), '0') + QString(":") + QString("___");
         groupMessageDispatchers[groupId]->onMessageReceived(author, isAction, false, message, hasIdType);
     //}
 }

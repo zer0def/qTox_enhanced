@@ -2091,6 +2091,11 @@ void Widget::onGroupMessageReceivedImage(int groupnumber, int peernumber, const 
 
     QPixmap mpixmap;
     bool result = mpixmap.loadFromData(image_data_bytes);
+    if (!result)
+    {
+        qDebug() << "onGroupMessageReceivedImage:loadFromData:trying with hardcoded WEBP type";
+        result = mpixmap.loadFromData(image_data_bytes, "WEBP");
+    }
     qDebug() << "onGroupMessageReceivedImage:loadFromData:res=" << result;
 
     //if (result)

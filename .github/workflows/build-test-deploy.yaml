@@ -7,11 +7,13 @@ on:
      - 'README.md'
      - '.github/workflows/startup-tests.yml'
      - '.github/workflows/change_log.yml'
+     - '.github/workflows/nixos.yaml'
   pull_request:
     paths-ignore:
      - 'README.md'
      - '.github/workflows/startup-tests.yml'
      - '.github/workflows/change_log.yml'
+     - '.github/workflows/nixos.yaml'
   workflow_dispatch:
     inputs:
       version:

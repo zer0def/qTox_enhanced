@@ -6,10 +6,12 @@ on:
     paths-ignore:
      - 'README.md'
      - '.github/workflows/startup-tests.yml'
+     - '.github/workflows/change_log.yml'
   pull_request:
     paths-ignore:
      - 'README.md'
      - '.github/workflows/startup-tests.yml'
+     - '.github/workflows/change_log.yml'
   workflow_dispatch:
     inputs:
       version:

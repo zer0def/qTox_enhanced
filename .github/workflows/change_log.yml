@@ -39,7 +39,7 @@ jobs:
       run:  |
             pwd
             $(which ruby) $(which github_changelog_generator) -u Zoxcore -p qTox_enhanced \
-               --exclude-tags "0.6.0,0.6.1," \
+               --exclude-tags "$(git tag -l 'v1.[2,3,4,5,6,7,8,9,0]*'| tr '\n' ',')$(git tag -l 'v1.1[0,1,2,3,4,5,6]*'| tr '\n' ',')nightly" \
                --token "$CHANGELOG_GEN_TOKEN"
 
     - name: chmod

@@ -63,31 +63,7 @@
 
 ## [v1.17.6](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6) (2022-03-06)
 
-[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.5...v1.17.6)
-
-## [v1.17.5](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.5) (2022-03-05)
-
-[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.4...v1.17.5)
-
-## [v1.17.4](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.4) (2021-12-15)
-
-[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.3...v1.17.4)
-
-## [v1.17.3](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.3) (2020-11-23)
-
-[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.2...v1.17.3)
-
-## [v1.17.2](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.2) (2020-04-26)
-
-[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.1...v1.17.2)
-
-## [v1.17.1](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.1) (2020-04-23)
-
-[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.0...v1.17.1)
-
-## [v1.17.0](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.0) (2020-04-19)
-
-[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.1...v1.17.0)
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.1...v1.17.6)
 
 ## [v1.1](https://github.com/Zoxcore/qTox_enhanced/tree/v1.1) (2015-06-04)
 

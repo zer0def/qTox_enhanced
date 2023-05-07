@@ -2,7 +2,15 @@ name: nixos tests
 
 on:
   push:
+    paths-ignore:
+     - 'README.md'
+     - '.github/workflows/startup-tests.yml'
+     - '.github/workflows/change_log.yml'
   pull_request:
+    paths-ignore:
+     - 'README.md'
+     - '.github/workflows/startup-tests.yml'
+     - '.github/workflows/change_log.yml'
 
 jobs:
     compile:

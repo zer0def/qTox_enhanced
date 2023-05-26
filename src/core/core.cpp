@@ -474,7 +474,9 @@ void Core::onFriendRequest(Tox* tox, const uint8_t* cFriendPk, const uint8_t* cM
 {
     std::ignore = tox;
     ToxPk friendPk(cFriendPk);
-    QString requestMessage = ToxString(cMessage, cMessageSize).getQString();
+    std::ignore = cMessage;
+    std::ignore = cMessageSize;
+    QString requestMessage = QString(""); // ToxString(cMessage, cMessageSize).getQString();
     emit static_cast<Core*>(core)->friendRequestReceived(friendPk, requestMessage);
 }
 

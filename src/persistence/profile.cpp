@@ -493,13 +493,13 @@ void Profile::onAvatarOfferReceived(uint32_t friendId, uint32_t fileId, const QB
  */
 bool Profile::saveToxSave(QByteArray data)
 {
-    qDebug() << "Profile::saveToxSave:START";
+    // qDebug() << "Profile::saveToxSave:START";
     assert(!isRemoved);
     ProfileLocker::assertLock(paths);
     assert(ProfileLocker::getCurLockName() == name);
 
     QString path = paths.getSettingsDirPath() + name + ".tox";
-    qDebug() << "Saving tox save to " << path;
+    // qDebug() << "Saving tox save to " << path;
     QSaveFile saveFile(path);
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qCritical() << "Tox save file " << path << " couldn't be opened";
@@ -526,7 +526,7 @@ bool Profile::saveToxSave(QByteArray data)
         return false;
     }
 
-    qDebug() << "Profile::saveToxSave:END";
+    // qDebug() << "Profile::saveToxSave:END";
     return true;
 }
 

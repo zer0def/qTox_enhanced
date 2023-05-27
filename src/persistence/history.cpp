@@ -876,6 +876,24 @@ QString History::getPushtoken(const ToxPk& friendPk)
     return pushtoken;
 }
 
+QString History::getSqlcipherVersion()
+{
+    if (!isValid()) {
+        return QString("");
+    }
+
+    QString sqlcipherVersion = QString("");
+    db->execNow(
+        RawDatabase::Query("PRAGMA cipher_version;",
+            [&](const QVector<QVariant>& row) {
+                    sqlcipherVersion = row[0].toString();
+                    qDebug() << "getSqlcipherVersion:" << sqlcipherVersion;
+            })
+    );
+
+    return sqlcipherVersion;
+}
+
 void History::pushtokenPing(const ToxPk& sender)
 {
     if (!isValid()) {

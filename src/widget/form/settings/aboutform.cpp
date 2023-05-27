@@ -26,6 +26,7 @@
 #include "src/widget/style.h"
 #include "src/widget/tool/recursivesignalblocker.h"
 #include "src/widget/translator.h"
+#include "src/widget/widget.h"
 
 #include <tox/tox.h>
 
@@ -102,7 +103,15 @@ void AboutForm::replaceVersions()
         tr("Commit hash: %1").arg(createLink(commitLink, QString(GIT_VERSION))));
 
     bodyUI->toxCoreVersion->setText(tr("toxcore version: %1").arg(TOXCORE_VERSION));
-    bodyUI->qtVersion->setText(QString("Qt compiled: ") + QString(QT_VERSION_STR) + QString(" / runtime: ") + QString::fromUtf8(qVersion()));
+    bodyUI->qtVersion->setText(QString("Qt compiled: ") +
+        QString(QT_VERSION_STR) +
+        QString(" / runtime: ") +
+        QString::fromUtf8(qVersion()) +
+        QString("\nSQLCipher: ") +
+        Widget::sqlcipher_version
+        );
+
+    qDebug() << "sqlcipher_version:" << Widget::sqlcipher_version;
 
     QString issueBody = QString("##### Brief Description\n\n"
                                 "OS: %1\n"

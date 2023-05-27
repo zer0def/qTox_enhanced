@@ -234,6 +234,7 @@ public:
 
     void addPushtoken(const ToxPk& sender, const QString& pushtoken);
     QString getPushtoken(const ToxPk& friendPk);
+    QString getSqlcipherVersion();
     void pushtokenPing(const ToxPk& sender);
 
     void addNewFileMessage(const ChatId& chatId, const QByteArray& fileId,

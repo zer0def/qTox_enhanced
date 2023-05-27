@@ -167,6 +167,7 @@ public:
     void registerIpcHandlers();
     static bool toxActivateEventHandler(const QByteArray& data, void* userData);
     bool handleToxSave(const QString& path);
+    static QString sqlcipher_version;
 
 public slots:
     void reloadTheme();

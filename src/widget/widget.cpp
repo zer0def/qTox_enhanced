@@ -106,6 +106,8 @@ const QString saveHandlerKey("save");
 
 } // namespace
 
+QString Widget::sqlcipher_version = "";
+
 bool Widget::toxActivateEventHandler(const QByteArray& data, void* userData)
 {
     std::ignore = data;
@@ -176,6 +178,9 @@ Widget::Widget(Profile &profile_, IAudioControl& audio_, CameraSource& cameraSou
 
 void Widget::init()
 {
+    auto history_cur = profile.getHistory();
+    Widget::sqlcipher_version = history_cur->getSqlcipherVersion();
+
     ui->setupUi(this);
 
     QIcon themeIcon = QIcon::fromTheme("qtox");

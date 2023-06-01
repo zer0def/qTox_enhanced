@@ -42,7 +42,7 @@ Features
 - Group chats
 - NGC (new group chats)
 - WIP: Group Images in NGC (only receiving for now, not sending)
-- PUSH notification (for mobile on TRIfA and Antidote)
+- [PUSH notification](https://github.com/zoff99/ToxAndroidRefImpl/blob/zoff99/dev003/PUSH_NOTIFICATION.md) (for mobile on [TRIfA](https://github.com/zoff99/ToxAndroidRefImpl) and [Antidote](https://github.com/Zoxcore/Antidote))
 - File transfers, with previewing of images
 - Screensharing (select "Screen" as Video source in the settings)
 - Audio calls, including group calls

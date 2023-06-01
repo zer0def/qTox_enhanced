@@ -1,5 +1,25 @@
 # Changelog
 
+## [v1.17.6.016](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.016) (2023-05-27)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.015...v1.17.6.016)
+
+**Security fixes:**
+
+- possible exploit with Notifications on Windows [\#6](https://github.com/Zoxcore/qTox_enhanced/issues/6)
+
+## [v1.17.6.015](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.015) (2023-05-27)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.014...v1.17.6.015)
+
+**Security fixes:**
+
+- sanitize notification strings [\#7](https://github.com/Zoxcore/qTox_enhanced/pull/7) ([zoff99](https://github.com/zoff99))
+
+## [v1.17.6.014](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.014) (2023-05-26)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.013...v1.17.6.014)
+
 ## [v1.17.6.013](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.013) (2023-05-06)
 
 [Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.012...v1.17.6.013)

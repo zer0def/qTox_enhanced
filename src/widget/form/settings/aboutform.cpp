@@ -30,6 +30,10 @@
 
 #include <tox/tox.h>
 
+#include <libavutil/avutil.h>
+#include <opus.h>
+#include <sodium.h>
+
 #include <QDebug>
 #include <QDesktopServices>
 #include <QPushButton>
@@ -102,13 +106,23 @@ void AboutForm::replaceVersions()
     bodyUI->gitVersion->setText(
         tr("Commit hash: %1").arg(createLink(commitLink, QString(GIT_VERSION))));
 
+    char libavutil_version_str[2000];
+    memset(libavutil_version_str, 0, 2000);
+    snprintf(libavutil_version_str, 1999, "%d.%d.%d", (int)LIBAVUTIL_VERSION_MAJOR, (int)LIBAVUTIL_VERSION_MINOR, (int)LIBAVUTIL_VERSION_MICRO);
+
     bodyUI->toxCoreVersion->setText(tr("toxcore version: %1").arg(TOXCORE_VERSION));
     bodyUI->qtVersion->setText(QString("Qt compiled: ") +
         QString(QT_VERSION_STR) +
         QString(" / runtime: ") +
         QString::fromUtf8(qVersion()) +
         QString("\nSQLCipher: ") +
-        Widget::sqlcipher_version
+        Widget::sqlcipher_version +
+        QString("\nlibav: ") +
+        QString::fromUtf8(libavutil_version_str) +
+        QString("\nopus: ") +
+        QString::fromUtf8(opus_get_version_string()) +
+        QString("\nsodium: ") +
+        QString::fromUtf8(sodium_version_string())
         );
 
     qDebug() << "sqlcipher_version:" << Widget::sqlcipher_version;

@@ -41,7 +41,7 @@
 #pragma GCC diagnostic ignored "-Wextra"
 #pragma GCC diagnostic ignored "-Wall"
 #include <opus.h>
-// #undef __STDC_VERSION__
+// #undef __STDC_VERSION__ // <-- this causes a warning and therefore an error again
 #pragma GCC diagnostic pop
 #else
 #include <opus.h>

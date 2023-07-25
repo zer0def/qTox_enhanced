@@ -31,7 +31,22 @@
 #include <tox/tox.h>
 
 #include <libavutil/avutil.h>
+
+#ifndef __STDC_VERSION__
+#define __STDC_VERSION__ 199401L
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpragmas"
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wpedantic"
+#pragma GCC diagnostic ignored "-Wextra"
+#pragma GCC diagnostic ignored "-Wall"
 #include <opus.h>
+// #undef __STDC_VERSION__
+#pragma GCC diagnostic pop
+#else
+#include <opus.h>
+#endif
+
 #include <sodium.h>
 
 #include <QDebug>

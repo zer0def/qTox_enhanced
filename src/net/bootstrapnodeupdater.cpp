@@ -163,6 +163,7 @@ QList<DhtServer> loadNodesFile(QString file)
         return {};
     }
 
+    qInfo() << "reading bootstrap nodes file ...";
     QString nodesJson = QString::fromUtf8(nodesFile.readAll());
     nodesFile.close();
 
@@ -172,6 +173,7 @@ QList<DhtServer> loadNodesFile(QString file)
         return {};
     }
 
+    qInfo() << "reading bootstrap nodes file ... DONE";
     return jsonToNodeList(jsonDoc);
 }
 

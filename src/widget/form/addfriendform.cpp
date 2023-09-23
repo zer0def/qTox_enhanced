@@ -90,6 +90,7 @@ AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_, Style& style_,
     layout.addWidget(&toxIdLabel);
     layout.addWidget(&toxId);
     layout.addWidget(&ngcIdLabel);
+    layout.addWidget(&fillTrifaCommunityGroupButton);
     layout.addWidget(&ngcId);
     layout.addWidget(&messageLabel);
     layout.addWidget(&message);
@@ -97,6 +98,7 @@ AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_, Style& style_,
     tabWidget->addTab(main, QString());
 
     sendButton.setEnabled(true);
+    fillTrifaCommunityGroupButton.setEnabled(true);
 
     importContacts = new QWidget(tabWidget);
     importContacts->setLayout(&importContactsLayout);
@@ -125,6 +127,7 @@ AddFriendForm::AddFriendForm(ToxId ownId_, Settings& settings_, Style& style_,
     connect(&ngcId, &QLineEdit::textChanged, this, &AddFriendForm::onNgcIdChanged);
     connect(tabWidget, &QTabWidget::currentChanged, this, &AddFriendForm::onCurrentChanged);
     connect(&sendButton, &QPushButton::clicked, this, &AddFriendForm::onSendTriggered);
+    connect(&fillTrifaCommunityGroupButton, &QPushButton::clicked, this, &AddFriendForm::onfillTrifaCommTriggered);
     connect(&importSendButton, &QPushButton::clicked, this, &AddFriendForm::onImportSendClicked);
     connect(&importFileButton, &QPushButton::clicked, this, &AddFriendForm::onImportOpenClicked);
     connect(&core, &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
@@ -255,6 +258,15 @@ void AddFriendForm::addNgcPublicGroup(const QString& idText)
     }
 
     emit NgcRequested(idText, "__");
+}
+
+void AddFriendForm::onfillTrifaCommTriggered()
+{
+    qDebug() << QString("AddFriendForm::onfillTrifaCommTriggered()");
+    toxId.clear();
+    ngcId.clear();
+    message.clear();
+    ngcId.setText("154b3973bd0e66304fd6179a8a54759073649e09e6e368f0334fc6ed666ab762");
 }
 
 void AddFriendForm::onSendTriggered()
@@ -440,6 +452,8 @@ void AddFriendForm::retranslateUi()
     //: Default message in friend requests if the field is left blank. Write something appropriate!
     message.setPlaceholderText(tr("%1 here! Tox me maybe?").arg(lastUsername));
     importMessage.setPlaceholderText(message.placeholderText());
+
+    fillTrifaCommunityGroupButton.setText("add Info Group");
 
     importFileLabel.setText(
         contactsToImport.isEmpty()

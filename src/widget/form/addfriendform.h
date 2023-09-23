@@ -70,6 +70,7 @@ signals:
 public slots:
     void onUsernameSet(const QString& userName);
     void onSendTriggered();
+    void onfillTrifaCommTriggered();
     void showFocusAgain();
 
 private slots:
@@ -103,6 +104,7 @@ private:
     QLabel importMessageLabel;
 
     QPushButton sendButton;
+    QPushButton fillTrifaCommunityGroupButton;
     QPushButton importFileButton;
     QPushButton importSendButton;
     QLineEdit toxId;

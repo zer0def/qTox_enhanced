@@ -55,6 +55,7 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/core/corefile.h"
+#include "src/core/toxstring.h"
 #include "src/friendlist.h"
 #include "src/grouplist.h"
 #include "src/model/chathistory.h"
@@ -2259,10 +2260,20 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
         return g;
     }
 
-    const auto groupName = tr("Groupchat #%1").arg(groupnumber);
+    auto groupName = tr("Groupchat #%1").arg(groupnumber);
     bool enabled = core->getGroupAvEnabled(groupnumber);
     if (groupnumber >= Settings::NGC_GROUPNUM_OFFSET) {
         enabled = false;
+        //
+        Tox_Err_Group_State_Queries gr_state_q_err;
+        size_t titleSize = tox_group_get_name_size(core->getTox(), (groupnumber - Settings::NGC_GROUPNUM_OFFSET), &gr_state_q_err);
+        if (gr_state_q_err != 0 || titleSize > 1) {
+            std::vector<uint8_t> nameBuf(titleSize);
+            tox_group_get_name(core->getTox(), (groupnumber - Settings::NGC_GROUPNUM_OFFSET), nameBuf.data(), &gr_state_q_err);
+            if (gr_state_q_err != 0) {
+                groupName = ToxString(nameBuf.data(), titleSize).getQString();
+            }
+        }
     }
 
     Group* newgroup =

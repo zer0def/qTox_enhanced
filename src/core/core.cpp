@@ -106,6 +106,70 @@ Core::~Core()
     tox.reset();
 }
 
+void Core::on_tox_group_connection_status_cb(Tox *tox, uint32_t group_number, int32_t status,
+                                            void* vCore)
+{
+    std::ignore = tox;
+    Core* core = static_cast<Core*>(vCore);
+    std::ignore = core;
+
+    std::ignore = group_number;
+    std::ignore = status;
+    emit core->saveRequest();
+}
+
+void Core::on_tox_group_peer_status_cb(Tox *tox, uint32_t group_number, uint32_t peer_id, Tox_User_Status status,
+                                      void* vCore)
+{
+    std::ignore = tox;
+    Core* core = static_cast<Core*>(vCore);
+    std::ignore = core;
+
+    std::ignore = group_number;
+    std::ignore = peer_id;
+    std::ignore = status;
+    emit core->saveRequest();
+}
+
+void Core::on_tox_group_privacy_state_cb(Tox *tox, uint32_t group_number, Tox_Group_Privacy_State privacy_state,
+                                        void* vCore)
+{
+    std::ignore = tox;
+    Core* core = static_cast<Core*>(vCore);
+    std::ignore = core;
+
+    std::ignore = group_number;
+    std::ignore = privacy_state;
+    emit core->saveRequest();
+}
+
+void Core::on_tox_group_password_cb(Tox *tox, uint32_t group_number, const uint8_t *password, size_t length,
+                                   void* vCore)
+{
+    std::ignore = tox;
+    Core* core = static_cast<Core*>(vCore);
+    std::ignore = core;
+
+    std::ignore = group_number;
+    std::ignore = password;
+    std::ignore = length;
+    emit core->saveRequest();
+}
+
+void Core::on_tox_group_moderation_cb(Tox *tox, uint32_t group_number, uint32_t source_peer_id, uint32_t target_peer_id,
+                                     Tox_Group_Mod_Event mod_type, void* vCore)
+{
+    std::ignore = tox;
+    Core* core = static_cast<Core*>(vCore);
+    std::ignore = core;
+
+    std::ignore = group_number;
+    std::ignore = source_peer_id;
+    std::ignore = target_peer_id;
+    std::ignore = mod_type;
+    emit core->saveRequest();
+}
+
 /**
  * @brief Registers all toxcore callbacks
  * @param tox Tox instance to register the callbacks on
@@ -132,6 +196,13 @@ void Core::registerCallbacks(Tox* tox)
     tox_callback_group_peer_join(tox, onNgcPeerJoin);
     tox_callback_group_peer_exit(tox, onNgcPeerExit);
     tox_callback_group_peer_name(tox, onNgcPeerName);
+
+    tox_callback_group_connection_status(tox, on_tox_group_connection_status_cb);
+    tox_callback_group_peer_status(tox, on_tox_group_peer_status_cb);
+    tox_callback_group_privacy_state(tox, on_tox_group_privacy_state_cb);
+    tox_callback_group_password(tox, on_tox_group_password_cb);
+    tox_callback_group_moderation(tox, on_tox_group_moderation_cb);
+
     tox_callback_group_message(tox, onNgcGroupMessage);
     tox_callback_group_private_message(tox, onNgcGroupPrivateMessage);
     tox_callback_group_custom_packet(tox, onNgcGroupCustomPacket);
@@ -1060,6 +1131,7 @@ void Core::onGroupPeerListChange(Tox* tox, uint32_t groupId, void* vCore)
     qDebug() << QString("Group %1 peerlist changed").arg(groupId);
     // no saveRequest, this callback is called on every connection to group peer, not just on brand new peers
     emit core->groupPeerlistChanged(groupId);
+    emit core->saveRequest();
 }
 
 void Core::onGroupPeerNameChange(Tox* tox, uint32_t groupId, uint32_t peerId, const uint8_t* name,
@@ -1071,6 +1143,7 @@ void Core::onGroupPeerNameChange(Tox* tox, uint32_t groupId, uint32_t peerId, co
     auto* core = static_cast<Core*>(vCore);
     auto peerPk = core->getGroupPeerPk(groupId, peerId);
     emit core->groupPeerNameChanged(groupId, peerPk, newName);
+    emit core->saveRequest();
 }
 
 void Core::onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId, const uint8_t* cTitle,

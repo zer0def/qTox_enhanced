@@ -258,6 +258,19 @@ private:
     void sendGroupMessageWithType(int groupId, const QString& message, Tox_Message_Type type);
     bool sendMessageWithType(uint32_t friendId, const QString& message, const QString& id_or_hash, const QDateTime& timestamp,
                                Tox_Message_Type type, ReceiptNum& receipt);
+
+    static void on_tox_group_connection_status_cb(Tox *tox, uint32_t group_number, int32_t status,
+                                            void* vCore);
+    static void on_tox_group_peer_status_cb(Tox *tox, uint32_t group_number, uint32_t peer_id, Tox_User_Status status,
+                                            void* vCore);
+    static void on_tox_group_privacy_state_cb(Tox *tox, uint32_t group_number, Tox_Group_Privacy_State privacy_state,
+                                        void* vCore);
+    static void on_tox_group_password_cb(Tox *tox, uint32_t group_number, const uint8_t *password, size_t length,
+                                   void* vCore);
+    static void on_tox_group_moderation_cb(Tox *tox, uint32_t group_number, uint32_t source_peer_id, uint32_t target_peer_id,
+                                     Tox_Group_Mod_Event mod_type, void* vCore);
+
+
     bool checkConnection();
 
     void makeTox(QByteArray savedata, ICoreSettings* s);

@@ -203,6 +203,7 @@ public slots:
     void onExtReceiptReceived(uint32_t friendNumber, uint64_t receiptId);
     void onFriendRequestReceived(const ToxPk& friendPk, const QString& message);
     void onFileReceiveRequested(const ToxFile& file);
+    void onNGCGroupSetTitle(uint32_t groupnumber, const GroupId& groupId, const QString& title);
     void onEmptyGroupCreated(uint32_t groupnumber, const GroupId& groupId, const QString& title);
     void onGroupJoined(int groupNum, const GroupId& groupId);
     void onGroupInviteReceived(const GroupInvite& inviteInfo);

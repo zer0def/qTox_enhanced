@@ -746,6 +746,7 @@ void Widget::onCoreChanged(Core& core_)
     connect(core, &Core::groupPeerNameChanged, this, &Widget::onGroupPeerNameChanged);
     connect(core, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
     connect(core, &Core::groupPeerAudioPlaying, this, &Widget::onGroupPeerAudioPlaying);
+    connect(core, &Core::NGCGroupSetTitle, this, &Widget::onNGCGroupSetTitle);
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
     connect(core, &Core::groupJoined, this, &Widget::onGroupJoined);
     connect(core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
@@ -2362,6 +2363,16 @@ Group* Widget::createGroup(uint32_t groupnumber, const GroupId& groupId)
     connect(widget, &GroupWidget::changeOwnNgcName, core, &Core::changeOwnNgcName);
 
     return newgroup;
+}
+
+void Widget::onNGCGroupSetTitle(uint32_t groupnumber, const GroupId& groupId, const QString& title)
+{
+    Group* g = groupList->findGroup(groupId);
+    if (groupnumber >= Settings::NGC_GROUPNUM_OFFSET) {
+        qDebug() << "NGC group:change title" << title;
+        g->setTitle(QString(), title);
+        chatListWidget->itemsChanged();
+    }
 }
 
 void Widget::onEmptyGroupCreated(uint32_t groupnumber, const GroupId& groupId, const QString& title)

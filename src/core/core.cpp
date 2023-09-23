@@ -800,6 +800,23 @@ void Core::onNgcSelfJoin(Tox* tox, uint32_t group_number, void* vCore)
     std::ignore = tox;
     Core* core = static_cast<Core*>(vCore);
     qDebug() << QString("onNgcSelfJoin:gn #%1").arg(group_number);
+    Tox_Err_Group_State_Queries error;
+    QString name;
+    size_t titleSize = tox_group_get_name_size(tox, group_number, &error);
+    const GroupId persistentId = core->getGroupPersistentId(group_number, 1);
+    const QString defaultName = persistentId.toString().left(8);
+    if (PARSE_ERR(error) || !titleSize) {
+        std::vector<uint8_t> nameBuf(titleSize);
+        tox_group_get_name(tox, group_number, nameBuf.data(), &error);
+        if (PARSE_ERR(error)) {
+            name = ToxString(nameBuf.data(), titleSize).getQString();
+        } else {
+            name = defaultName;
+        }
+    } else {
+        name = defaultName;
+    }
+    emit core->NGCGroupSetTitle((Settings::NGC_GROUPNUM_OFFSET + group_number), persistentId, name);
     emit core->saveRequest();
 }
 

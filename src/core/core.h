@@ -195,6 +195,7 @@ signals:
     void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void groupPeerAudioPlaying(int groupnumber, ToxPk peerPk);
     void groupSentFailed(int groupId);
+    void NGCGroupSetTitle(uint32_t groupnumber, const GroupId& groupId, const QString& title);
     void groupJoined(int groupnumber, GroupId groupId);
     void actionSentResult(uint32_t friendId, const QString& action, int success);
 

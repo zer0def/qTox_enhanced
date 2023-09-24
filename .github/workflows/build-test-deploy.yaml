@@ -191,15 +191,18 @@ jobs:
           echo "$VV"
           echo "{VERSION}={$VV}" >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
+          ls -al $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       # The zync file names MUST match the pattern "qTox-*.x86_64.AppImage.zsync"
       # indefinitely for older versions to be able to update https://github.com/AppImage/AppImageSpec/blob/master/draft.md#github-releases
       - name: Rename appimage for release upload
         if: contains(github.ref, 'refs/tags/v')
         run: |
+          echo $GITHUB_REF
           VV=$(echo $GITHUB_REF | cut -d / -f 3)
-          cp qTox-*.x86_64.AppImage qTox-"$VV".x86_64.AppImage
+          cp -v qTox-*.x86_64.AppImage qTox-"$VV".x86_64.AppImage
           sha256sum qTox-"$VV".x86_64.AppImage > qTox-"$VV".x86_64.AppImage.sha256
-          cp qTox-*.x86_64.AppImage.zsync qTox-"$VV".x86_64.AppImage.zsync
+          cp -v qTox-*.x86_64.AppImage.zsync qTox-"$VV".x86_64.AppImage.zsync
       - name: Upload to versioned release
         if: contains(github.ref, 'refs/tags/v')
         uses: ncipollo/release-action@v1
@@ -211,8 +214,8 @@ jobs:
       - name: Rename artifact for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
         run: |
-          cp qTox-*.x86_64.AppImage qTox-nightly.x86_64.AppImage
-          cp qTox-*.x86_64.AppImage.zsync qTox-nightly.x86_64.AppImage.zsync
+          cp -v qTox-*.x86_64.AppImage qTox-nightly.x86_64.AppImage
+          cp -v qTox-*.x86_64.AppImage.zsync qTox-nightly.x86_64.AppImage.zsync
       - name: Upload to nightly release
         uses: ncipollo/release-action@v1
         if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
@@ -253,6 +256,7 @@ jobs:
         if: contains(github.ref, 'refs/tags/v')
         id: get_version
         run: |
+          echo $GITHUB_REF
           VV=$(echo $GITHUB_REF | cut -d / -f 3)
           echo "$VV"
           echo "{VERSION}={$VV}" >> $GITHUB_OUTPUT
@@ -260,8 +264,9 @@ jobs:
       - name: Rename flatpak for release upload
         if: contains(github.ref, 'refs/tags/v')
         run: |
+          echo $GITHUB_REF
           VV=$(echo $GITHUB_REF | cut -d / -f 3)
-          cp qtox.flatpak qTox-"$VV".x86_64.flatpak
+          cp -v qtox.flatpak qTox-"$VV".x86_64.flatpak
           sha256sum qTox-"$VV".x86_64.flatpak > qTox-"$VV".x86_64.flatpak.sha256
       - name: Upload to versioned release
         if: contains(github.ref, 'refs/tags/v')
@@ -274,7 +279,7 @@ jobs:
       - name: Rename artifact for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
         run: |
-          cp qtox.flatpak qTox-nightly.flatpak
+          cp -v qtox.flatpak qTox-nightly.flatpak
           sha256sum qTox-nightly.flatpak > qTox-nightly.flatpak.sha256
       - name: Upload to nightly release
         uses: ncipollo/release-action@v1

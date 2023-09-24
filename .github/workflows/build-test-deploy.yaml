@@ -186,16 +186,20 @@ jobs:
       - name: Get tag name for appimage release file name
         if: contains(github.ref, 'refs/tags/v')
         id: get_version
-        run: echo "{VERSION}={$(echo $GITHUB_REF | cut -d / -f 3)}" >> $GITHUB_OUTPUT
+        run: |
+          VV=$(echo $GITHUB_REF | cut -d / -f 3)
+          echo "$VV"
+          echo "{VERSION}={$VV}" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
       # The zync file names MUST match the pattern "qTox-*.x86_64.AppImage.zsync"
       # indefinitely for older versions to be able to update https://github.com/AppImage/AppImageSpec/blob/master/draft.md#github-releases
       - name: Rename appimage for release upload
         if: contains(github.ref, 'refs/tags/v')
         run: |
-          $(echo $GITHUB_REF | cut -d / -f 3)
-          cp qTox-*.x86_64.AppImage qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage
-          sha256sum qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage > qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage.sha256
-          cp qTox-*.x86_64.AppImage.zsync qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.AppImage.zsync
+          VV=$(echo $GITHUB_REF | cut -d / -f 3)
+          cp qTox-*.x86_64.AppImage qTox-"$VV".x86_64.AppImage
+          sha256sum qTox-"$VV".x86_64.AppImage > qTox-"$VV".x86_64.AppImage.sha256
+          cp qTox-*.x86_64.AppImage.zsync qTox-"$VV".x86_64.AppImage.zsync
       - name: Upload to versioned release
         if: contains(github.ref, 'refs/tags/v')
         uses: ncipollo/release-action@v1
@@ -248,12 +252,17 @@ jobs:
       - name: Get tag name for flatpak release file name
         if: contains(github.ref, 'refs/tags/v')
         id: get_version
-        run: echo "{VERSION}={$(echo $GITHUB_REF | cut -d / -f 3)}" >> $GITHUB_OUTPUT
+        run: |
+          VV=$(echo $GITHUB_REF | cut -d / -f 3)
+          echo "$VV"
+          echo "{VERSION}={$VV}" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
       - name: Rename flatpak for release upload
         if: contains(github.ref, 'refs/tags/v')
         run: |
-          cp qtox.flatpak qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak
-          sha256sum qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak > qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak.sha256
+          VV=$(echo $GITHUB_REF | cut -d / -f 3)
+          cp qtox.flatpak qTox-"$VV".x86_64.flatpak
+          sha256sum qTox-"$VV".x86_64.flatpak > qTox-"$VV".x86_64.flatpak.sha256
       - name: Upload to versioned release
         if: contains(github.ref, 'refs/tags/v')
         uses: ncipollo/release-action@v1

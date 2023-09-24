@@ -1,5 +1,18 @@
 # Changelog
 
+## [v1.17.6.023](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.023) (2023-09-24)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.017...v1.17.6.023)
+
+## [v1.17.6.017](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.017) (2023-07-29)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.016...v1.17.6.017)
+
+**Merged pull requests:**
+
+- Translations update from Hosted Weblate [\#9](https://github.com/Zoxcore/qTox_enhanced/pull/9) ([weblate](https://github.com/weblate))
+- limit notification strings length [\#8](https://github.com/Zoxcore/qTox_enhanced/pull/8) ([zoff99](https://github.com/zoff99))
+
 ## [v1.17.6.016](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.016) (2023-05-27)
 
 [Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.015...v1.17.6.016)

@@ -275,7 +275,7 @@ jobs:
           allowUpdates: true
           draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak,qTox-${{ steps.get_version.outputs.VERSION }}.x86_64.flatpak.sha256"
+          artifacts: "qTox-v1.*.x86_64.flatpak,qTox-v1.*.x86_64.flatpak.sha256"
       - name: Rename artifact for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
         run: |

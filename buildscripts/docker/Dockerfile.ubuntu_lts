@@ -99,12 +99,12 @@ RUN mkdir -p /src/ldqt && \
     /build/build_ldqt_linux.sh && \
     rm -fr /src/ldqt
 
-COPY download/download_aitool.sh /build/download/download_aitool.sh
-COPY build_aitool_linux.sh /build/build_aitool_linux.sh
-RUN mkdir -p /src/aitool && \
-    cd /src/aitool && \
-    /build/build_aitool_linux.sh && \
-    rm -fr /src/aitool
+#COPY download/download_aitool.sh /build/download/download_aitool.sh
+#COPY build_aitool_linux.sh /build/build_aitool_linux.sh
+#RUN mkdir -p /src/aitool && \
+#    cd /src/aitool && \
+#    /build/build_aitool_linux.sh && \
+#    rm -fr /src/aitool
 
 COPY download/download_toxcore.sh /build/download/download_toxcore.sh
 COPY download/download_toxext.sh /build/download/download_toxext.sh

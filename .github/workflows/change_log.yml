@@ -15,7 +15,7 @@ defaults:
 
 jobs:
   gen-changelog:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: genlog_gen_token
     steps:
     - uses: actions/checkout@v3

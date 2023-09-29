@@ -47,6 +47,8 @@
 #include <opus.h>
 #endif
 
+#include "vpx/vpx_codec.h"
+
 #include <sodium.h>
 
 #include <QDebug>
@@ -136,6 +138,8 @@ void AboutForm::replaceVersions()
         QString::fromUtf8(libavutil_version_str) +
         QString("\nopus: ") +
         QString::fromUtf8(opus_get_version_string()) +
+        QString("\nvpx: ") +
+        QString::fromUtf8(vpx_codec_version_str()) +
         QString("\nsodium: ") +
         QString::fromUtf8(sodium_version_string())
         );

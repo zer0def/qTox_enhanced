@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with qTox.  If not, see <http://www.gnu.org/licenses/>
 
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -60,7 +60,7 @@ RUN apt-get update && \
         libvpx-dev \
         libkf5sonnet-dev \
         libxss-dev \
-        qt5-default \
+        qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools \
         qttools5-dev \
         zsync \
         libarchive-dev \
@@ -126,7 +126,6 @@ RUN apt-get update && \
         libbs2b-dev \
         libbluray-dev \
         libass-dev \
-        libcrystalhd-dev \
         libvdpau-dev \
         libva-dev \
         libva-x11-2 \
@@ -160,7 +159,7 @@ RUN apt-get update && \
         libgsm1-dev \
         libgpgme-dev \
         flite-dev \
-        libdc1394-22-dev \
+        libdc1394-dev \
         libcaca-dev \
         libraw1394-dev \
         libavc1394-dev \
@@ -168,6 +167,12 @@ RUN apt-get update && \
         libchromaprint-dev \
         librsvg2-dev \
         libgme-dev \
+        libaom-dev \
+        libcodec2-dev \
+        libdrm-dev \
+        libbrotli-dev \
+        opencl-c-headers \
+        nvidia-opencl-dev \
         && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

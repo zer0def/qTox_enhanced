@@ -186,7 +186,7 @@ jobs:
         with:
           docker_image_name: ubuntu_for_appimage
       - name: Run build
-        run: docker-compose run --rm ubuntu_lts ./appimage/build.sh --src-dir /qtox
+        run: docker-compose run --rm ubuntu_for_appimage ./appimage/build.sh --src-dir /qtox
       - name: Upload appimage
         uses: actions/upload-artifact@v3
         with:

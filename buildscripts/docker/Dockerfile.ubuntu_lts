@@ -172,7 +172,7 @@ RUN apt-get update && \
         libdrm-dev \
         libbrotli-dev \
         opencl-c-headers \
-        nvidia-opencl-dev \
+        nvidia-opencl-dev
 
 RUN apt-get -y --force-yes install \
         libzstd1 \

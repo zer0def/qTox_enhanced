@@ -47,6 +47,12 @@ services:
       context: ./buildscripts
       dockerfile: docker/Dockerfile.ubuntu_lts
     <<: *shared_params
+  ubuntu_for_appimage:
+    image: qtox_ubuntu_appimage:latest
+    build:
+      context: ./buildscripts
+      dockerfile: docker/Dockerfile.ubuntu_for_appimage
+    <<: *shared_params
   flatpak:
     image: qtox_flatpak:latest
     # Flatpak build uses pivot_root() in tcl build

@@ -4,6 +4,7 @@ ubuntu_18.04/
 nixos/
 windows/
 flatpak/
+appimage/
 ubuntu_20.04/
 ubuntu_22.04/
 toxid_save/

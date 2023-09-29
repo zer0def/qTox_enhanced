@@ -51,6 +51,15 @@ jobs:
         name: "Build docker image"
         with:
           docker_image_name: ubuntu_lts
+  build-ubuntu-for-appimage-docker:
+    name: Build ubuntu for AppImage docker image
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/build-docker-image
+        name: "Build docker image"
+        with:
+          docker_image_name: ubuntu_for_appimage
   build-debian-docker:
     name: Build debian docker image
     runs-on: ubuntu-22.04
@@ -162,10 +171,10 @@ jobs:
   build-appimage:
     name: Appimage
     runs-on: ubuntu-22.04
-    needs: [build-ubuntu-lts-docker, update-nightly-tag]
+    needs: [build-ubuntu-for-appimage-docker, update-nightly-tag]
     if: |
       always() &&
-      needs.build-ubuntu-lts-docker.result == 'success' &&
+      needs.build-ubuntu-for-appimage-docker.result == 'success' &&
       (needs.update-nightly-tag.result == 'success' ||
         needs.update-nightly-tag.result == 'skipped')
     permissions:
@@ -175,7 +184,7 @@ jobs:
       - uses: ./.github/actions/load-docker-image
         name: Load docker image
         with:
-          docker_image_name: ubuntu_lts
+          docker_image_name: ubuntu_for_appimage
       - name: Run build
         run: docker-compose run --rm ubuntu_lts ./appimage/build.sh --src-dir /qtox
       - name: Upload appimage

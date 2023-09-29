@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with qTox.  If not, see <http://www.gnu.org/licenses/>
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -60,7 +60,7 @@ RUN apt-get update && \
         libvpx-dev \
         libkf5sonnet-dev \
         libxss-dev \
-        qt5-default \
+        qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools \
         qttools5-dev \
         zsync \
         libarchive-dev \
@@ -92,19 +92,19 @@ RUN mkdir -p /src/snore && \
     /build/build_snore_linux.sh --system-install && \
     rm -fr /src/snore
 
-COPY download/download_ldqt.sh /build/download/download_ldqt.sh
-COPY build_ldqt_linux.sh /build/build_ldqt_linux.sh
-RUN mkdir -p /src/ldqt && \
-    cd /src/ldqt && \
-    /build/build_ldqt_linux.sh && \
-    rm -fr /src/ldqt
+#COPY download/download_ldqt.sh /build/download/download_ldqt.sh
+#COPY build_ldqt_linux.sh /build/build_ldqt_linux.sh
+#RUN mkdir -p /src/ldqt && \
+#    cd /src/ldqt && \
+#    /build/build_ldqt_linux.sh && \
+#    rm -fr /src/ldqt
 
-COPY download/download_aitool.sh /build/download/download_aitool.sh
-COPY build_aitool_linux.sh /build/build_aitool_linux.sh
-RUN mkdir -p /src/aitool && \
-    cd /src/aitool && \
-    /build/build_aitool_linux.sh && \
-    rm -fr /src/aitool
+# COPY download/download_aitool.sh /build/download/download_aitool.sh
+# COPY build_aitool_linux.sh /build/build_aitool_linux.sh
+# RUN mkdir -p /src/aitool && \
+#    cd /src/aitool && \
+#    /build/build_aitool_linux.sh && \
+#    rm -fr /src/aitool
 
 COPY download/download_toxcore.sh /build/download/download_toxcore.sh
 COPY download/download_toxext.sh /build/download/download_toxext.sh
@@ -126,7 +126,6 @@ RUN apt-get update && \
         libbs2b-dev \
         libbluray-dev \
         libass-dev \
-        libcrystalhd-dev \
         libvdpau-dev \
         libva-dev \
         libva-x11-2 \
@@ -160,7 +159,7 @@ RUN apt-get update && \
         libgsm1-dev \
         libgpgme-dev \
         flite-dev \
-        libdc1394-22-dev \
+        libdc1394-dev \
         libcaca-dev \
         libraw1394-dev \
         libavc1394-dev \
@@ -168,9 +167,29 @@ RUN apt-get update && \
         libchromaprint-dev \
         librsvg2-dev \
         libgme-dev \
-        && \
+        libaom-dev \
+        libcodec2-dev \
+        libdrm-dev \
+        libbrotli-dev \
+        opencl-c-headers \
+        nvidia-opencl-dev
+
+RUN apt-get -y --force-yes install \
+        libzstd1 \
+        libzstd-dev \
+        libmfx-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /src/deployqt_appimage && \
+    wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -O /src/deployqt_appimage/linuxdeployqt-x86_64.AppImage && \
+    chmod a+rx /src/deployqt_appimage/linuxdeployqt-x86_64.AppImage && \
+    echo "7040d72ad7120c4187ca5fa4bca7d288a0fd1f536bfe0353fdb1f35012d3b8ce  /src/deployqt_appimage/linuxdeployqt-x86_64.AppImage" | sha256sum -c
+
+RUN mkdir -p /src/appimage_kit && \
+    wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /src/appimage_kit/appimagetool-x86_64.AppImage && \
+    chmod a+rx /src/appimage_kit/appimagetool-x86_64.AppImage && \
+    echo "b90f4a8b18967545fda78a445b27680a1642f1ef9488ced28b65398f2be7add2  /src/appimage_kit/appimagetool-x86_64.AppImage" | sha256sum -c
 
 RUN mkdir -p /src/tox && \
     cd /src/tox && \

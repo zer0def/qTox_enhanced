@@ -92,12 +92,12 @@ RUN mkdir -p /src/snore && \
     /build/build_snore_linux.sh --system-install && \
     rm -fr /src/snore
 
-COPY download/download_ldqt.sh /build/download/download_ldqt.sh
-COPY build_ldqt_linux.sh /build/build_ldqt_linux.sh
-RUN mkdir -p /src/ldqt && \
-    cd /src/ldqt && \
-    /build/build_ldqt_linux.sh && \
-    rm -fr /src/ldqt
+#COPY download/download_ldqt.sh /build/download/download_ldqt.sh
+#COPY build_ldqt_linux.sh /build/build_ldqt_linux.sh
+#RUN mkdir -p /src/ldqt && \
+#    cd /src/ldqt && \
+#    /build/build_ldqt_linux.sh && \
+#    rm -fr /src/ldqt
 
 #COPY download/download_aitool.sh /build/download/download_aitool.sh
 #COPY build_aitool_linux.sh /build/build_aitool_linux.sh

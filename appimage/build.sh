@@ -51,7 +51,7 @@ QTOX_APP_DIR="$BUILD_DIR"/appdir
 readonly QTOX_APP_DIR
 readonly LOCAL_LIB_DIR="$QTOX_APP_DIR"/local/lib
 # ldqt binary
-readonly LDQT_BIN="/usr/lib/qt5/bin/linuxdeployqt"
+readonly LDQT_BIN="/src/deployqt_appimage/linuxdeployqt-x86_64.AppImage"
 
 # update information to be embeded in AppImage
 readonly UPDATE_INFO="gh-releases-zsync|qTox|qTox|latest|qTox-*.x86_64.AppImage.zsync"
@@ -97,4 +97,4 @@ for lib in "${libs[@]}"; do
     patchelf --set-rpath '$ORIGIN' "$LOCAL_LIB_DIR/$lib_file_name"
 done
 
-appimagetool -u "$UPDATE_INFO" $QTOX_APP_DIR qTox-${GIT_VERSION}.x86_64.AppImage
+/src/appimage_kit/appimagetool-x86_64.AppImage -u "$UPDATE_INFO" $QTOX_APP_DIR qTox-${GIT_VERSION}.x86_64.AppImage

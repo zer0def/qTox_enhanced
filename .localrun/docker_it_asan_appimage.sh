@@ -11,15 +11,12 @@ cd $_HOME_
 
 if [ "$1""x" == "buildx" ]; then
     cp -a ../buildscripts .
-    docker build -f Dockerfile_asan_ub22 -t qtox_asan_push_002_ub22 .
+    cd ./buildscripts/
+    docker build -f docker/Dockerfile.ubuntu_for_asan_appimage -t qtox_asan_appimage002 .
     exit 0
 fi
 
-cp -a ../.ci-scripts/build-qtox-linux.sh .
-
-build_for='
-asan_ubuntu:22.04
-'
+build_for="asan_appimage"
 
 for system_to_build_for in $build_for ; do
 
@@ -40,22 +37,12 @@ for system_to_build_for in $build_for ; do
 
     echo '#! /bin/bash
 
-cp -av /workspace/build/* /qtox/
-cp -av /workspace/build/.??* /qtox/
-cd /qtox/.ci-scripts/
+cp -a /workspace/build/. /qtox/
+./appimage/asan_build.sh --src-dir /qtox
 
-# disable tests
-sed -i -e "s#^include(Testing)##" /qtox/CMakeLists.txt
-cat /qtox/CMakeLists.txt|grep -i test
+ls -alR *x86_64.AppImage || echo "ignore error"
 
-./build-qtox-linux.sh --sanitize --full --build-type Release
-
-ls -hal /qtox/.ci-scripts/qtox
-
-cp -av /qtox/.ci-scripts/qtox /artefacts/
-cp -av /usr/lib/x86_64-linux-gnu/libsnore* /artefacts/
-cp -av /usr/local/lib/libtoxcore* /artefacts/
-
+cp -av /qtox/qTox-asan-.x86_64.AppImage /artefacts/qTox-asan-.x86_64.AppImage || exit 1
 chmod a+rwx /artefacts/*
 
 ' > $_HOME_/"$system_to_build_for"/script/run.sh
@@ -65,7 +52,8 @@ chmod a+rwx /artefacts/*
       -v $_HOME_/"$system_to_build_for"/script:/script \
       -v $_HOME_/"$system_to_build_for"/workspace:/workspace \
       --net=host \
-     "qtox_asan_push_002_ub22" \
+      --privileged \
+     "qtox_asan_appimage002" \
      /bin/sh -c "apk add bash >/dev/null 2>/dev/null; /bin/bash /script/run.sh"
      if [ $? -ne 0 ]; then
         echo "** ERROR **:$system_to_build_for_orig"

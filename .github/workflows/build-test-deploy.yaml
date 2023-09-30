@@ -60,6 +60,15 @@ jobs:
         name: "Build docker image"
         with:
           docker_image_name: ubuntu_for_appimage
+  build-ubuntu-for-asan-appimage-docker:
+    name: Build ubuntu for ASAN AppImage docker image
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/build-docker-image
+        name: "Build docker image"
+        with:
+          docker_image_name: ubuntu_for_asan_appimage
   build-debian-docker:
     name: Build debian docker image
     runs-on: ubuntu-22.04
@@ -237,6 +246,77 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "qTox-nightly.x86_64.AppImage,qTox-nightly.x86_64.AppImage.zsync"
+
+  build-asan_appimage:
+    name: ASAN_Appimage
+    runs-on: ubuntu-22.04
+    needs: [build-ubuntu-for-asan-appimage-docker, update-nightly-tag]
+    if: |
+      always() &&
+      needs.build-ubuntu-for-asan-appimage-docker.result == 'success' &&
+      (needs.update-nightly-tag.result == 'success' ||
+        needs.update-nightly-tag.result == 'skipped')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/load-docker-image
+        name: Load docker image
+        with:
+          docker_image_name: ubuntu_for_asan_appimage
+      - name: Run build
+        run: docker-compose run --rm ubuntu_for_asan_appimage ./appimage/asan_build.sh --src-dir /qtox
+      - name: Upload asan appimage
+        uses: actions/upload-artifact@v3
+        with:
+          name: qTox-asan-${{ github.sha }}.x86_64.AppImage
+          path: qTox-*.x86_64.AppImage
+      - name: Get tag name for appimage release file name
+        if: contains(github.ref, 'refs/tags/v')
+        id: get_version
+        run: |
+          VV=$(echo $GITHUB_REF | cut -d / -f 3)
+          echo "$VV"
+          echo "{VERSION}={$VV}" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
+          ls -al $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
+      # The zync file names MUST match the pattern "qTox-asan-*.x86_64.AppImage.zsync"
+      # indefinitely for older versions to be able to update https://github.com/AppImage/AppImageSpec/blob/master/draft.md#github-releases
+      - name: Rename appimage for release upload
+        if: contains(github.ref, 'refs/tags/v')
+        run: |
+          echo $GITHUB_REF
+          VV=$(echo $GITHUB_REF | cut -d / -f 3)
+          cp -v qTox-asan-*.x86_64.AppImage qTox-asan-"$VV".x86_64.AppImage
+          sha256sum qTox-asan-"$VV".x86_64.AppImage > qTox-asan-"$VV".x86_64.AppImage.sha256
+          cp -v qTox-asan-*.x86_64.AppImage.zsync qTox-asan-"$VV".x86_64.AppImage.zsync
+      - name: Upload to versioned release
+        if: contains(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "qTox-asan-v1.*.x86_64.AppImage,qTox-asan-v1.*.x86_64.AppImage.sha256,qTox-asan-v1.*.x86_64.AppImage.zsync"
+      - name: Rename artifact for nightly upload
+        if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
+        run: |
+          cp -v qTox-asan-*.x86_64.AppImage qTox-asan-nightly.x86_64.AppImage
+          cp -v qTox-asan-*.x86_64.AppImage.zsync qTox-asan-nightly.x86_64.AppImage.zsync
+      - name: Upload to nightly release
+        uses: ncipollo/release-action@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
+        with:
+          allowUpdates: true
+          tag: nightly
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          prerelease: true
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "qTox-asan-nightly.x86_64.AppImage,qTox-asan-nightly.x86_64.AppImage.zsync"
+
   build-flatpak:
     name: Flatpak
     runs-on: ubuntu-22.04

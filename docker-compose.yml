@@ -49,6 +49,7 @@ services:
     <<: *shared_params
   ubuntu_for_appimage:
     image: qtox_ubuntu_appimage:latest
+    privileged: true
     build:
       context: ./buildscripts
       dockerfile: docker/Dockerfile.ubuntu_for_appimage

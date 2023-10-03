@@ -72,8 +72,8 @@ RUN apt-get update && \
         liblz4-dev \
         libcairo-dev \
         desktop-file-utils \
-        wget \
         xxd \
+        wget \
         ca-certificates \
         curl \
         patchelf \

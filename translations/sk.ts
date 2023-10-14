@@ -133,63 +133,63 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
     </message>
     <message>
         <source>Screen Capture FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurácia obrazovky FPS</translation>
     </message>
     <message>
         <source>Change framerate and video bitrate for screen capture.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmena rámu a video bitrate pre zachytávanie obrazovky.</translation>
     </message>
     <message>
         <source>HD (200 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>HD (200 kbps)</translation>
     </message>
     <message>
         <source>HD (128 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>HD (128 kbps)</translation>
     </message>
     <message>
         <source>30 FPS / 10000 kbit/s vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>30 FPS / 10000 kbit / s vbitrate</translation>
     </message>
     <message>
         <source>25 FPS / 10000 kbit/s vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>25 FPS / 10000 kbit / s vbitrate</translation>
     </message>
     <message>
         <source>enable Acoustic Echo Cancellation</source>
-        <translation type="unfinished"></translation>
+        <translation>povoliť Akustický Echo Zrušenie</translation>
     </message>
     <message>
         <source>AEC Audio Latency</source>
-        <translation type="unfinished"></translation>
+        <translation>AEC Audio Latencia</translation>
     </message>
     <message>
         <source>Set the Audio Latency for Acoustic Echo Cancellation in ms. The default value is 20 ms.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť Audio Latencia pre Akoustic Echo Zrušenie v ms. Štandardná hodnota je 20 ms.</translation>
     </message>
     <message>
         <source>10 FPS / dynamic vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>10 FPS / dynamická vbitrate</translation>
     </message>
     <message>
         <source>AEC Audio Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>AEC Audio režim</translation>
     </message>
     <message>
         <source>AEC Mode 0 to 4</source>
-        <translation type="unfinished"></translation>
+        <translation>AEC režim 0 až 4</translation>
     </message>
     <message>
         <source>AEC NS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>AEC NS režim</translation>
     </message>
     <message>
         <source>AEC NS Mode 0 to 3</source>
-        <translation type="unfinished"></translation>
+        <translation>AEC NS režim 0 na 3</translation>
     </message>
     <message>
         <source>20 FPS / dynamic vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>10 FPS / dynamická vbitrate</translation>
     </message>
 </context>
 <context>
@@ -520,19 +520,19 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
     </message>
     <message>
         <source>NGC Public Group ID, 64 hexadecimal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>NGC Public Group ID, 64 hexadecimálne znaky</translation>
     </message>
     <message>
         <source>Type in the NGC Public Group ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ v ID NGC Public Group</translation>
     </message>
     <message>
         <source>NGC ID invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>NGC ID neplatné</translation>
     </message>
     <message>
         <source>Couldn&apos;t join NGC Public Group, or NGC ID error</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno pripojiť NGC Public Group, alebo NGC ID chyba</translation>
     </message>
 </context>
 <context>
@@ -668,15 +668,15 @@ Rýchlosť vášho pripojenia nemusí byť vždy dostačujúca pre vyššiu kval
     </message>
     <message>
         <source>Network Connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Sieťové pripojenia</translation>
     </message>
     <message>
         <source>This is still in BETA. It will show the network connections that toxcore is currently using</source>
-        <translation type="unfinished"></translation>
+        <translation>To je stále v BETA. Zobrazí sieťové pripojenia, ktoré toxcore je v súčasnosti pomocou</translation>
     </message>
     <message>
         <source>Show Tox Network Connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť Tox sieťové pripojenia</translation>
     </message>
 </context>
 <context>
@@ -1312,11 +1312,21 @@ the only allowed Push Servers are (no other servers will ever be contacted):
   &quot;https://gotify1.unifiedpush.org/&quot;
   &quot;https://ntfy.sh/&quot;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Push notifikácie pomáhajú mobilným užívateľom Tox (s TRIfA a Antidote) ušetriť batériu a šírku siete.
+táto funkcia bude kontaktovať z kapely HTTPS webserver s Push Token pre vášho priateľa, žiadne ďalšie informácie nie sú odoslané!
+ale to odhalí vašu IP adresu na webserver a tiež čas, keď ste pinged váš priateľ.
+môžete zabrániť vašej IP od odosielania pomocou proxy server (ako Tor).
+Ak zakážete toto nastavenie, používatelia mobilných telefónov môžu prijímať správy oveľa neskôr, než ich odošlete.
+jediné povolené Push servery sú (nie iné servery budú niekedy kontaktované):
+
+&quot;https://tox.zoff.xyz/toxfcm/&quot;
+&quot;https://gotify1.unifiedpush.org/&quot;
+&quot;https://ntfy.sh/&quot;
+</translation>
     </message>
     <message>
         <source>enable Push Notification</source>
-        <translation type="unfinished"></translation>
+        <translation>povoliť push Oznámenie</translation>
     </message>
 </context>
 <context>
@@ -1466,7 +1476,7 @@ the only allowed Push Servers are (no other servers will ever be contacted):
     </message>
     <message>
         <source>Change your name in this group</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmeňte svoje meno v tejto skupine</translation>
     </message>
 </context>
 <context>
@@ -2624,11 +2634,11 @@ Toto ID obsahuje kód NoSpam (modrou) a kontrolný súčet (šedou).</translatio
     </message>
     <message>
         <source>Failed to load chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Podarilo sa načítať históriu chatu</translation>
     </message>
     <message>
         <source>Database version (%1) is newer than we currently support (%2). Please upgrade qTox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzia databázy (%1) je novší, než v súčasnosti podporujeme (%2). Prosím upgrade qTox.</translation>
     </message>
 </context>
 <context>

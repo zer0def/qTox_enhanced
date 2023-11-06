@@ -33,16 +33,12 @@ fi
 
 "${SCRIPT_DIR}/download/download_vpx.sh"
 
-if [ "${SCRIPT_ARCH}" == "macos" ]; then
-    patch -Np1 < "${SCRIPT_DIR}/patches/vpx-macos.patch"
-else
-    patch -Np1 < "${SCRIPT_DIR}/patches/vpx-windows.patch"
-fi
 
-CFLAGS="${ARCH_FLAGS} ${CROSS_CFLAG}" \
-CPPFLAGS="${CROSS_CPPFLAG}" \
-LDFLAGS="${CROSS_LDFLAG}" \
-CROSS="${CROSS_ARG}" \
+if [ "${SCRIPT_ARCH}" == "macos" ]; then
+  CFLAGS="${ARCH_FLAGS} ${CROSS_CFLAG}" \
+  CPPFLAGS="${CROSS_CPPFLAG}" \
+  LDFLAGS="${CROSS_LDFLAG}" \
+  CROSS="${CROSS_ARG}" \
     ./configure \
         ${TARGET_ARG} \
         "--prefix=${DEP_PREFIX}" \
@@ -53,6 +49,22 @@ CROSS="${CROSS_ARG}" \
         --disable-tools \
         --disable-docs \
         --disable-unit-tests
+else
+  CFLAGS="${ARCH_FLAGS} ${CROSS_CFLAG}" \
+  CPPFLAGS="${CROSS_CPPFLAG}" \
+  LDFLAGS="${CROSS_LDFLAG}" \
+  CROSS="${CROSS_ARG}" \
+    ./configure \
+        ${TARGET_ARG} \
+        "--prefix=${DEP_PREFIX}" \
+        --disable-shared \
+        --enable-static \
+        --enable-runtime-cpu-detect \
+        --disable-examples \
+        --disable-tools \
+        --disable-docs \
+        --disable-unit-tests
+fi
 
 make -j "${MAKE_JOBS}"
 make install

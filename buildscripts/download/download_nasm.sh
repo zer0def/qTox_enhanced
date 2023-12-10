@@ -20,6 +20,6 @@ set -euo pipefail
 NASM_HASH="nasm-2.15.01"
 
 git clone -b master --single-branch --recursive \
-http://repo.or.cz/nasm.git .
+https://github.com/netwide-assembler/nasm .
 
 git checkout "$NASM_HASH"

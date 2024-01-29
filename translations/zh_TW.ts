@@ -97,7 +97,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>閾值</translation>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>

@@ -165,7 +165,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Set the Audio Latency for Acoustic Echo Cancellation in ms. The default value is 20 ms.</source>
-        <translation>设置声学回声消除的音频延迟。（默认值为 20 毫秒。）</translation>
+        <translation>设置声学回声消除的音频延迟。（默认值为 20 毫秒）.</translation>
     </message>
     <message>
         <source>10 FPS / dynamic vbitrate</source>

@@ -184,7 +184,7 @@ RUN apt-get -y --force-yes install \
 RUN mkdir -p /src/deployqt_appimage && \
     wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage -O /src/deployqt_appimage/linuxdeployqt-x86_64.AppImage && \
     chmod a+rx /src/deployqt_appimage/linuxdeployqt-x86_64.AppImage && \
-    echo "7040d72ad7120c4187ca5fa4bca7d288a0fd1f536bfe0353fdb1f35012d3b8ce  /src/deployqt_appimage/linuxdeployqt-x86_64.AppImage" | sha256sum -c
+    echo "b58446b73c9b6c4695505ee8d7b913e1436d535a7e4abd243952a1b156e4e819  /src/deployqt_appimage/linuxdeployqt-x86_64.AppImage" | sha256sum -c
 
 RUN mkdir -p /src/appimage_kit && \
     wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /src/appimage_kit/appimagetool-x86_64.AppImage && \

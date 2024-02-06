@@ -1,3 +1,12 @@
+# Please switch to the more modern<br>and still well maintained [TRIfA Material](https://github.com/Zoxcore/trifa_material)
+
+<img src="https://github.com/Zoxcore/trifa_material/releases/download/nightly/screenshot-macos.png" width="90%">
+
+
+[TRIfA Material](https://github.com/Zoxcore/trifa_material)
+
+<br><br><br><br><br><br><br><br><br>
+
 # <img src="https://raw.githubusercontent.com/Zoxcore/qTox_enhanced/zoxcore/push_notification/img/icons/256x256/qtox.png" height="60" alt="qTox" />&nbsp;&nbsp;&nbsp;qTox [with PUSH and NGC features]
 
 <img src="https://github.com/Zoxcore/qTox_enhanced/releases/download/nightly/screenshot-macos.png" width="90%">

@@ -101,11 +101,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Use slider to set the volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποιήστε τη μπάρα κύλισης για να ρυθμίσετε την ένταση των ηχείων σας.</translation>
     </message>
     <message>
         <source>Transmitted audio quality. Lower this setting if your bandwidth is not high enough or if you want to reduce bandwidth usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεταδιδόμενη ποιότητα ήχου. Μειώστε αυτή τη ρύθμιση αν το εύρος της σύνδεσής σας δεν είναι αρκετό, ή αν θέλετε να μειώστε την κατανάλωση δεδομένων απο το εύρος ζώνης σας.</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -113,79 +113,82 @@ The higher values, the better video quality your friends may get.
 Note that with better video quality, you use more bandwidth.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορίστε την ανάλυση της κάμεράς σας.
+Όσο υψηλότερη τιμή ορίσετε τόσο καλύτερη ποιότητα βίντεο οι φίλοι σας θα μπορούν να δούν.
+Μερικές φορές η σύνδεσή σας μπορεί να μην είναι αρκετά καλή ώστε να μεταδώσει καλύτερη ποιότητα βίντεο,
+το οποίο μπορεί να δημιουργήσει προβλήματα στις βιντεοκλήσεις.</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ακούστε ένα δείγμα ήχου όσο αλλάζετε την ένταση εξόδου.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποιήστε τη μπάρα κύλισης για να επιλέξετε την απολαβή (ήχου) της συσκευής εισόδου (μικρόφωνο) η οποία κυμαίνεται από %1dB μέχρι και %2dB.</translation>
     </message>
     <message>
         <source>Use slider to set the activation volume for your input device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποιήστε τη μπάρα κύλισης για να επιλέξετε την ένταση ενεργοποίησης της συσκευής εισόδου (ήχου).</translation>
     </message>
     <message>
         <source>Screen Capture FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>Καταγραφή οθόνης Καρέ ανα Λεπτό (FPS)</translation>
     </message>
     <message>
         <source>Change framerate and video bitrate for screen capture.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αλλάξτε την ροή των καρέ και το ρυθμό μετάδοσς του βίντεο για την καταγραφή της οθόνης.</translation>
     </message>
     <message>
         <source>HD (200 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Υψήλή Ευκρίνεια HD (200 kbps)</translation>
     </message>
     <message>
         <source>HD (128 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>Υψηλή Ευκρίνεια HD (200 kbps)</translation>
     </message>
     <message>
         <source>30 FPS / 10000 kbit/s vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>30 Καρέ ανα Δευτερόλεπτο / 10000 kbit/δευτερόλεπτο ρυθμός μετάδοσης βίντεο</translation>
     </message>
     <message>
         <source>25 FPS / 10000 kbit/s vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>25 Καρέ ανα Δευτερόλεπτο / 10000 kbit/δευτερόλεπτο ρυθμός μετάδοσης βίντεο</translation>
     </message>
     <message>
         <source>enable Acoustic Echo Cancellation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενεργοποιήστε την ακύρωση ηχούς του ήχου</translation>
     </message>
     <message>
         <source>AEC Audio Latency</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθυστέρηση ήχου από την ακύρωση της ηχούς του ήχου</translation>
     </message>
     <message>
         <source>Set the Audio Latency for Acoustic Echo Cancellation in ms. The default value is 20 ms.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορίστε την καθυστέρηση του ήχου για τη λειτουργία της ακύρωσης της ηχούς σε milli-δευτερόλεπτα. Η προεπιλεγμένη τιμή είναι 20 ms.</translation>
     </message>
     <message>
         <source>10 FPS / dynamic vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>10 Καρέ ανα Δευτερόλεπτο / δυναμικός ρυθμός μετάδοσης βίντεο</translation>
     </message>
     <message>
         <source>AEC Audio Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Λειτουργεία Ακύρωσης Ηχούς του ήχου</translation>
     </message>
     <message>
         <source>AEC Mode 0 to 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Λειτουργία Ακύρωσης Ηχούς του ήχου 0 μέχρι 4</translation>
     </message>
     <message>
         <source>AEC NS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ακύρωση Ηχούς του ήχου Λειτουργία Εξάλειψης Θορύβου</translation>
     </message>
     <message>
         <source>AEC NS Mode 0 to 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Λειτουργία Ακύρωσης Ηχούς του ήχου 0 μέχρι 3</translation>
     </message>
     <message>
         <source>20 FPS / dynamic vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>20 Καρέ ανα Δευτερόλεπτο δυναμικός ρυθμός μετάδοσης βίντεο</translation>
     </message>
 </context>
 <context>
@@ -309,11 +312,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the public key of your friend, use it to verify their identity via another channel. You can not send this to other people so they can add this contact.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Αυτό είναι το δημόσιο κλειδί του φίλου σας, χρησιμοποιήστε για να επαληθεύσετε την ταυτοπροσωπία του με άλλο τρόπο. Δεν μπορείτε να στείλετε αυτό σε άλλους έτσι ώστε να προσθέσουν την επαφή αυτή.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Public key (not ToxID):</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημόσιο Κλειδί (όχι ΤαυτότηταTox):</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -321,11 +324,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Are you sure to remove %1 chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Είστε σίγουροι οτι θέλετε να αφαιρέσετε %1 ιστορικό συνομιλίας?</translation>
     </message>
     <message>
         <source>Failed to remove chat history with %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποτυχία αφαίρεσης ιστορικού συνομιλίας με %1!</translation>
     </message>
     <message>
         <source>Auto-accept files</source>
@@ -333,7 +336,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto-accept for this contact is disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Η αυτόματη αποδοχή γι&apos; αυτή την επαφή είναι απενεργοποιημένη</translation>
     </message>
     <message>
         <source>Auto-accept call:</source>

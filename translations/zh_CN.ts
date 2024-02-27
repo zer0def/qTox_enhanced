@@ -133,63 +133,63 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Screen Capture FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>屏幕捕捉的帧率</translation>
     </message>
     <message>
         <source>Change framerate and video bitrate for screen capture.</source>
-        <translation type="unfinished"></translation>
+        <translation>为屏幕截图更改帧速率和视频比特率.</translation>
     </message>
     <message>
         <source>HD (200 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>标清(200 kbps)</translation>
     </message>
     <message>
         <source>HD (128 kbps)</source>
-        <translation type="unfinished"></translation>
+        <translation>标清(128kbps)</translation>
     </message>
     <message>
         <source>30 FPS / 10000 kbit/s vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>30帧，10Mbps 动态比特率</translation>
     </message>
     <message>
         <source>25 FPS / 10000 kbit/s vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>25帧10Mbps动态比特率</translation>
     </message>
     <message>
         <source>enable Acoustic Echo Cancellation</source>
-        <translation type="unfinished"></translation>
+        <translation>启用声学回声消除</translation>
     </message>
     <message>
         <source>AEC Audio Latency</source>
-        <translation type="unfinished"></translation>
+        <translation>AEC 音频延迟</translation>
     </message>
     <message>
         <source>Set the Audio Latency for Acoustic Echo Cancellation in ms. The default value is 20 ms.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置声学回声消除的音频延迟。（默认值为 20 毫秒）.</translation>
     </message>
     <message>
         <source>10 FPS / dynamic vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>10 帧 / 动态比特率</translation>
     </message>
     <message>
         <source>AEC Audio Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>回声消除模式</translation>
     </message>
     <message>
         <source>AEC Mode 0 to 4</source>
-        <translation type="unfinished"></translation>
+        <translation>回声消除级别（0到4）</translation>
     </message>
     <message>
         <source>AEC NS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>消除回声并降噪模式</translation>
     </message>
     <message>
         <source>AEC NS Mode 0 to 3</source>
-        <translation type="unfinished"></translation>
+        <translation>消除回声并降噪（级别0至3）</translation>
     </message>
     <message>
         <source>20 FPS / dynamic vbitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>20 FPS / 动态比特率</translation>
     </message>
 </context>
 <context>
@@ -518,19 +518,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>NGC Public Group ID, 64 hexadecimal characters</source>
-        <translation type="unfinished"></translation>
+        <translation>NGC公共群聊ID，64 个十六进制字符</translation>
     </message>
     <message>
         <source>Type in the NGC Public Group ID</source>
-        <translation type="unfinished"></translation>
+        <translation>输入 NGC公共群聊ID</translation>
     </message>
     <message>
         <source>NGC ID invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>该群聊不存在</translation>
     </message>
     <message>
         <source>Couldn&apos;t join NGC Public Group, or NGC ID error</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加入，或者是ID错误</translation>
     </message>
 </context>
 <context>
@@ -666,15 +666,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Network Connections</source>
-        <translation type="unfinished"></translation>
+        <translation>网络连接</translation>
     </message>
     <message>
         <source>This is still in BETA. It will show the network connections that toxcore is currently using</source>
-        <translation type="unfinished"></translation>
+        <translation>因为这还是开发版本，所以这将会展示toxcore的网络连接状况</translation>
     </message>
     <message>
         <source>Show Tox Network Connections</source>
-        <translation type="unfinished"></translation>
+        <translation>显示Tox网络连接</translation>
     </message>
 </context>
 <context>
@@ -1303,11 +1303,21 @@ the only allowed Push Servers are (no other servers will ever be contacted):
   &quot;https://gotify1.unifiedpush.org/&quot;
   &quot;https://ntfy.sh/&quot;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>推送通知可帮助 Tox（包括 TRIfA 和 Antidote）的移动用户节省电池和网络带宽。
+该功能将通过 HTTPS 网络服务器为您的朋友发送推送令牌，不会发送其他信息！
+但这将向网络服务器显示您的 IP 地址，以及您呼叫好友的时间。
+您可以使用代理服务器（如 Tor）来防止您的 IP 地址被发送。
+如果禁用此设置，手机用户收到信息的时间可能会比您发送信息的时间晚很多。
+唯一允许使用的推送服务器是（不会联系其他服务器）：
+
+  &quot;https://tox.zoff.xyz/toxfcm/&quot;
+  &quot;https://gotify1.unifiedpush.org/&quot;
+  &quot;https://ntfy.sh/&quot;
+</translation>
     </message>
     <message>
         <source>enable Push Notification</source>
-        <translation type="unfinished"></translation>
+        <translation>启用推送通知</translation>
     </message>
 </context>
 <context>
@@ -1453,7 +1463,7 @@ the only allowed Push Servers are (no other servers will ever be contacted):
     </message>
     <message>
         <source>Change your name in this group</source>
-        <translation type="unfinished"></translation>
+        <translation>改变你再群聊里的昵称</translation>
     </message>
 </context>
 <context>

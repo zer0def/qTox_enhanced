@@ -77,7 +77,7 @@ Take heed, fer higher qualities demand clearer skies.If yer seas are stormy, yer
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>the freshness o&apos; yer sound waves</translation>
     </message>
     <message>
         <source>High (64 kbps)</source>

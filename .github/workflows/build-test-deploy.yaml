@@ -78,25 +78,6 @@ jobs:
         name: "Build docker image"
         with:
           docker_image_name: debian
-  build-debian-old-docker:
-    name: Build old debian docker image
-    runs-on: ubuntu-22.04
-    if: ${{ false }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/build-docker-image
-        name: "Build docker image"
-        with:
-          docker_image_name: debian_old
-  build-windows-i686-docker:
-    name: Build 32 bit windows docker image
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/build-docker-image
-        name: "Build docker image"
-        with:
-          docker_image_name: windows_builder.i686
   build-debian:
     name: Debian
     runs-on: ubuntu-22.04
@@ -113,23 +94,6 @@ jobs:
           docker_image_name: debian
       - name: Run build
         run: docker-compose run --rm debian ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
-  build-debian-old:
-    name: Debian Old
-    runs-on: ubuntu-22.04
-    if: ${{ false }}
-    needs: build-debian-old-docker
-    strategy:
-      matrix:
-        features: [full, minimal]
-        build_type: [Debug, Release]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/load-docker-image
-        name: Load docker image
-        with:
-          docker_image_name: debian_old
-      - name: Run build
-        run: docker-compose run --rm debian_old ./.ci-scripts/build-qtox-linux.sh --build-type ${{ matrix.build_type }} --${{ matrix.features }}
   translation-check:
     name: Check for translatable strings
     runs-on: ubuntu-22.04

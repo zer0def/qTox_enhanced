@@ -1,5 +1,35 @@
 # Changelog
 
+## [v1.17.6.027](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.027) (2024-03-23)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.026...v1.17.6.027)
+
+**Closed issues:**
+
+- Building on Debian Trixie/sid: Error in coreav.h for ‘TOXAV\_CALL\_COMM\_INFO’ [\#17](https://github.com/Zoxcore/qTox_enhanced/issues/17)
+
+**Merged pull requests:**
+
+- Bump actions/checkout from 3 to 4 [\#23](https://github.com/Zoxcore/qTox_enhanced/pull/23) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Translations update from Hosted Weblate [\#21](https://github.com/Zoxcore/qTox_enhanced/pull/21) ([weblate](https://github.com/weblate))
+- Translations update from Hosted Weblate [\#20](https://github.com/Zoxcore/qTox_enhanced/pull/20) ([weblate](https://github.com/weblate))
+
+## [v1.17.6.026](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.026) (2023-11-06)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.025...v1.17.6.026)
+
+**Merged pull requests:**
+
+- Translations update from Hosted Weblate [\#14](https://github.com/Zoxcore/qTox_enhanced/pull/14) ([weblate](https://github.com/weblate))
+
+## [v1.17.6.025](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.025) (2023-10-03)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.024...v1.17.6.025)
+
+## [v1.17.6.024](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.024) (2023-09-30)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.023...v1.17.6.024)
+
 ## [v1.17.6.023](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.023) (2023-09-24)
 
 [Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.017...v1.17.6.023)

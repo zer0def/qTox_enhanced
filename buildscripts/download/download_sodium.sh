@@ -17,8 +17,8 @@
 
 set -euo pipefail
 
-SODIUM_VERSION=1.0.18
-SODIUM_HASH=6f504490b342a4f8a4c4a02fc9b866cbef8622d5df4e5452b46be121e46636c1
+SODIUM_VERSION=1.0.19
+SODIUM_HASH=018d79fe0a045cca07331d37bd0cb57b2e838c51bc48fd837a1472e50068bbea
 
 source "$(dirname "$(realpath "$0")")/common.sh"
 

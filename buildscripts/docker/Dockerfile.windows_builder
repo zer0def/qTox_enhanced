@@ -98,9 +98,11 @@ RUN mkdir -p /src/curl && \
 COPY download/download_qt.sh /build/download/download_qt.sh
 COPY build_qt_windows_download_only.sh /build/build_qt_windows_download_only.sh
 
+RUN df -h
 RUN mkdir -p /src/qt && \
   cd /src/qt && \
   /build/build_qt_windows_download_only.sh --arch ${SCRIPT_ARCH}
+RUN df -h
 
 COPY build_qt_windows.sh /build/build_qt_windows.sh
 
@@ -108,6 +110,7 @@ RUN mkdir -p /src/qt && \
   cd /src/qt && \
   /build/build_qt_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/qt
+RUN df -h
 
 COPY download/download_sqlcipher.sh /build/download/download_sqlcipher.sh
 COPY build_sqlcipher.sh /build/build_sqlcipher.sh
@@ -268,5 +271,6 @@ RUN mkdir -p /src/gdb && \
   rm -fr /src/gdb && \
   cp /windows/bin/gdb.exe /debug_export/gdb.exe
 
+RUN df -h
 RUN mkdir -p /qtox
 WORKDIR /qtox

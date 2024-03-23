@@ -88,15 +88,6 @@ jobs:
         name: "Build docker image"
         with:
           docker_image_name: debian_old
-  build-windows-docker:
-    name: Build windows docker image
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/build-docker-image
-        name: "Build docker image"
-        with:
-          docker_image_name: windows_builder
   build-windows-i686-docker:
     name: Build 32 bit windows docker image
     runs-on: ubuntu-22.04
@@ -382,44 +373,51 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "qTox-nightly.flatpak,qTox-nightly.flatpak.sha256"
+
+
+
+
   build-windows:
     name: Windows
     runs-on: ubuntu-22.04
-    needs: [build-windows-docker, update-nightly-tag]
+    needs: [update-nightly-tag]
     if: |
       always() &&
-      needs.build-windows-docker.result == 'success' &&
       (needs.update-nightly-tag.result == 'success' ||
         needs.update-nightly-tag.result == 'skipped')
     permissions:
         contents: write
     strategy:
       matrix:
-        build_type: [Debug, Release]
+        build_type: [Release]
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/load-docker-image
-        name: Load docker image
-        with:
-          docker_image_name: windows_builder
-      - name: Run build
-        run: docker-compose run --rm windows_builder ./windows/cross-compile/build.sh --arch x86_64 --build-type ${{ matrix.build_type }} --run-tests --src-dir /qtox
+
+      - name: build deps
+        run: ./buildscripts/docker/nondocker_windows_builder.sh --src-dir /qtox
+
+      - name: build qtox
+        run: ./windows/cross-compile/build.sh --arch x86_64 --build-type ${{ matrix.build_type }} --run-tests --src-dir /qtox
+
       - name: Upload installer
         if: matrix.build_type == 'release'
         uses: actions/upload-artifact@v3
         with:
           name: setup-qtox-x86_64-${{ matrix.build_type }}.exe
           path: package-prefix/setup-qtox.exe
+
       - name: Upload zip
         uses: actions/upload-artifact@v3
         with:
           name: qtox-x86_64-${{ matrix.build_type }}.zip
           path: install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip
+
       - name: Rename exe for release upload
         if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
         run: |
           cp package-prefix/setup-qtox.exe setup-qtox-x86_64-release.exe
           sha256sum setup-qtox-x86_64-release.exe > setup-qtox-x86_64-release.exe.sha256
+
       - name: Upload to versioned release
         if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
         uses: ncipollo/release-action@v1
@@ -428,11 +426,13 @@ jobs:
           draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "setup-qtox-x86_64-release.exe,setup-qtox-x86_64-release.exe.sha256"
+
       - name: Rename zip for nightly upload
         if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
         run: |
           cp install-prefix/qtox-x86_64-${{ matrix.build_type }}.zip qtox-nightly-x86_64-${{ matrix.build_type }}.zip
           sha256sum qtox-nightly-x86_64-${{ matrix.build_type }}.zip > qtox-nightly-x86_64-${{ matrix.build_type }}.zip.sha256
+
       - name: Upload zip to nightly release
         if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
         uses: ncipollo/release-action@v1
@@ -478,86 +478,10 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "qtox-nightly-x86_64-${{ matrix.build_type }}.exe,qtox-nightly-x86_64-${{ matrix.build_type }}.exe.sha256"
-  build-windows-i686:
-    name: Windows i686
-    runs-on: ubuntu-22.04
-    needs: [build-windows-i686-docker, update-nightly-tag]
-    if: |
-      false &&
-      needs.build-windows-i686-docker.result == 'success' &&
-      (needs.update-nightly-tag.result == 'success' ||
-        needs.update-nightly-tag.result == 'skipped')
-    permissions:
-      contents: write
-    strategy:
-      matrix:
-        build_type: [Debug, Release]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/load-docker-image
-        name: Load docker image
-        with:
-          docker_image_name: windows_builder.i686
-      - name: Run build
-        run: docker-compose run --rm windows_builder.i686 ./windows/cross-compile/build.sh --arch i686 --build-type ${{ matrix.build_type }} --run-tests --src-dir /qtox
-      - name: Upload installer
-        if: matrix.build_type == 'release'
-        uses: actions/upload-artifact@v3
-        with:
-          name: setup-qtox-i686-${{ matrix.build_type }}.exe
-          path: package-prefix/setup-qtox.exe
-      - name: Upload zip
-        uses: actions/upload-artifact@v3
-        with:
-          name: qtox-i686-${{ matrix.build_type }}.zip
-          path: install-prefix/qtox-i686-${{ matrix.build_type }}.zip
-      - name: Rename exe for release upload
-        if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
-        run: |
-          cp package-prefix/setup-qtox.exe setup-qtox-i686-release.exe
-          sha256sum setup-qtox-i686-release.exe > setup-qtox-i686-release.exe.sha256
-      - name: Upload to versioned release
-        if: contains(github.ref, 'refs/tags/v') && matrix.build_type == 'release'
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          draft: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "setup-qtox-i686-release.exe,setup-qtox-i686-release.exe.sha256"
-      - name: Rename zip for nightly upload
-        if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
-        run: |
-          cp install-prefix/qtox-i686-${{ matrix.build_type }}.zip qtox-nightly-i686-${{ matrix.build_type }}.zip
-          sha256sum qtox-nightly-i686-${{ matrix.build_type }}.zip > qtox-nightly-i686-${{ matrix.build_type }}.zip.sha256
-      - name: Upload zip to nightly release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification'
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          tag: nightly
-          omitBodyDuringUpdate: true
-          omitNameDuringUpdate: true
-          prerelease: true
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "qtox-nightly-i686-${{ matrix.build_type }}.zip,qtox-nightly-i686-${{ matrix.build_type }}.zip.sha256"
-      - name: Rename exe for nightly upload
-        if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification' && matrix.build_type == 'release'
-        run: |
-          cp package-prefix/setup-qtox.exe qtox-nightly-i686-${{ matrix.build_type }}.exe
-          sha256sum qtox-nightly-i686-${{ matrix.build_type }}.exe > qtox-nightly-i686-${{ matrix.build_type }}.exe.sha256
-      - name: Upload exe to nightly release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/zoxcore/push_notification' && matrix.build_type == 'release'
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          tag: nightly
-          omitBodyDuringUpdate: true
-          omitNameDuringUpdate: true
-          prerelease: true
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "qtox-nightly-i686-${{ matrix.build_type }}.exe,qtox-nightly-i686-${{ matrix.build_type }}.exe.sha256"
+
+
+
+
   build-osx-distributable:
     name: macOS distributable
     runs-on: macos-12

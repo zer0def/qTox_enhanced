@@ -16,7 +16,7 @@ mkdir -p /build/download/
 mkdir -p /src/
 
 ln -s /home/runner/work/qTox_enhanced/qTox_enhanced /qtox
-ls -al /
+ls -al /qtox/
 
 dpkg --add-architecture i386 && \
     apt-get update && apt-get install -y --no-install-recommends \

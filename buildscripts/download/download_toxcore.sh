@@ -18,8 +18,8 @@
 set -euo pipefail
 
 # use toxcore with enhanced ToxAV
-TOXCORE_VERSION="18c170b5210c50f402525c56fa02ad17ba04e399" # 0.2.18 enhanced
-TOXCORE_HASH="ef37b174c1b92b57e9aef5e7ad725405d5c16370af69c61cac1911f36ceefb86"
+TOXCORE_VERSION="580fb5369ddf32e0302b4eba1344a72ddc13bfa4" # 0.2.18 enhanced
+TOXCORE_HASH="d12e4100220ddcf877508b7643fd125f8c0b879dd5dd4f984570466464705cc2"
 
 source "$(dirname "$(realpath "$0")")/common.sh"
 

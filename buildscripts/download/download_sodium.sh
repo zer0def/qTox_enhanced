@@ -23,5 +23,5 @@ SODIUM_HASH=018d79fe0a045cca07331d37bd0cb57b2e838c51bc48fd837a1472e50068bbea
 source "$(dirname "$(realpath "$0")")/common.sh"
 
 download_verify_extract_tarball \
-    "https://download.libsodium.org/libsodium/releases/libsodium-${SODIUM_VERSION}.tar.gz" \
+    "https://github.com/jedisct1/libsodium/releases/download/${SODIUM_VERSION}-RELEASE/libsodium-${SODIUM_VERSION}.tar.gz" \
     "${SODIUM_HASH}"

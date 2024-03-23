@@ -1,7 +1,9 @@
 #! /bin/bash
 
-exoprt DEBIAN_FRONTEND=noninteractive
+id -a
+pwd
 
+export DEBIAN_FRONTEND=noninteractive
 
 export ARCH=x86_64
 export WINEARCH=win64

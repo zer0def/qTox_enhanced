@@ -19,9 +19,8 @@ set -euo pipefail
 
 QT_MAJOR=5
 QT_MINOR=15
-QT_PATCH=9
-QT_HASH=26d5f36134db03abe4a6db794c7570d729c92a3fc1b0bf9b1c8f86d0573cd02f
-
+QT_PATCH=13
+QT_HASH=9550ec8fc758d3d8d9090e261329700ddcd712e2dda97e5fcfeabfac22bea2ca
 source "$(dirname "$(realpath "$0")")/common.sh"
 
 #    https://download.qt.io/archive/qt/${QT_MAJOR}.${QT_MINOR}/${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}/single/qt-everywhere-opensource-src-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz \

@@ -19,7 +19,7 @@ let
             (fetchpatch {
               url =
                 "https://raw.githubusercontent.com/Zoxcore/qTox_enhanced/zoxcore/push_notification/buildscripts/patches/tc___ftv2_capabilities.patch";
-              sha256 = "sha256-LU4EDwEKLh5m3OByt/Mc1dyM3huCFwHFgWo083s6lKg=";
+              sha256 = "sha256-JThBGKgpLKQTLYCWpTyWPPaZ2WuyTA6N8BXeh8+e7g0=";
             })
           ];
           buildInputs = [

@@ -483,7 +483,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [build-windows-i686-docker, update-nightly-tag]
     if: |
-      always() &&
+      false &&
       needs.build-windows-i686-docker.result == 'success' &&
       (needs.update-nightly-tag.result == 'success' ||
         needs.update-nightly-tag.result == 'skipped')

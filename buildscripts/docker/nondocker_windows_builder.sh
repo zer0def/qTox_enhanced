@@ -13,6 +13,7 @@ export SCRIPT_ARCH=${WINEARCH}
 
 
 mkdir -p /build/download/
+mkdir -p /build/patches/
 mkdir -p /src/
 
 ln -s /home/runner/work/qTox_enhanced/qTox_enhanced /qtox

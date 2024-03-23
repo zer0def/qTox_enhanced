@@ -5,9 +5,12 @@ pwd
 
 export DEBIAN_FRONTEND=noninteractive
 
+_HOME_=/home/runner/work/qTox_enhanced/qTox_enhanced
+
 export ARCH=x86_64
 export WINEARCH=win64
 export SCRIPT_ARCH=${WINEARCH}
+
 
 mkdir -p /build/download/
 mkdir -p /src/
@@ -45,11 +48,11 @@ apt-get clean && \
 update-alternatives --set ${ARCH}-w64-mingw32-gcc /usr/bin/${ARCH}-w64-mingw32-gcc-posix && \
   update-alternatives --set ${ARCH}-w64-mingw32-g++ /usr/bin/${ARCH}-w64-mingw32-g++-posix
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/common.sh /build/download/common.sh
 cp -v build_utils.sh /build/build_utils.sh
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_nasm.sh /build/download/download_nasm.sh
 cp -v build_nasm.sh /build/build_nasm.sh
 
@@ -58,7 +61,7 @@ mkdir -p /src/nasm && \
   /build/build_nasm.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/nasm
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_libx264.sh /build/download/download_libx264.sh
 cp -v build_libx264_windows.sh /build/build_libx264_windows.sh
 
@@ -67,7 +70,7 @@ mkdir -p /src/libx264 && \
   /build/build_libx264_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/libx264
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_openssl.sh /build/download/download_openssl.sh
 cp -v build_openssl.sh /build/build_openssl.sh
 
@@ -76,7 +79,7 @@ mkdir -p /src/openssl && \
   /build/build_openssl.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/openssl
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_libcurl.sh /build/download/download_libcurl.sh
 cp -v build_libcurl_windows.sh /build/build_libcurl_windows.sh
 
@@ -85,7 +88,7 @@ mkdir -p /src/curl && \
   /build/build_libcurl_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/curl
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_qt.sh /build/download/download_qt.sh
 cp -v build_qt_windows_download_only.sh /build/build_qt_windows_download_only.sh
 
@@ -95,7 +98,7 @@ mkdir -p /src/qt && \
   /build/build_qt_windows_download_only.sh --arch ${SCRIPT_ARCH}
 df -h
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v build_qt_windows.sh /build/build_qt_windows.sh
 
 mkdir -p /src/qt && \
@@ -104,7 +107,7 @@ mkdir -p /src/qt && \
   rm -fr /src/qt
 df -h
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_sqlcipher.sh /build/download/download_sqlcipher.sh
 cp -v build_sqlcipher.sh /build/build_sqlcipher.sh
 
@@ -113,7 +116,7 @@ mkdir -p /src/sqlcipher && \
   /build/build_sqlcipher.sh  --arch ${SCRIPT_ARCH} && \
   rm -fr /src/sqlcipher
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_ffmpeg.sh /build/download/download_ffmpeg.sh
 cp -v build_ffmpeg.sh /build/build_ffmpeg.sh
 mkdir -p /src/ffmpeg && \
@@ -121,10 +124,10 @@ mkdir -p /src/ffmpeg && \
   /build/build_ffmpeg.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/ffmpeg
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v toolchain/windows-${ARCH}-toolchain.cmake /build/windows-toolchain.cmake
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_openal.sh /build/download/download_openal.sh
 cp -v build_openal.sh /build/build_openal.sh
 cp -v patches/openal-cmake-3-11.patch /build/patches/openal-cmake-3-11.patch
@@ -134,7 +137,7 @@ mkdir -p /src/openal && \
   /build/build_openal.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/openal
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_qrencode.sh /build/download/download_qrencode.sh
 cp -v build_qrencode.sh /build/build_qrencode.sh
 mkdir -p /src/qrencode && \
@@ -142,7 +145,7 @@ mkdir -p /src/qrencode && \
   /build/build_qrencode.sh  --arch ${SCRIPT_ARCH} && \
   rm -fr /src/qrencode
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_libexif.sh /build/download/download_libexif.sh
 cp -v build_libexif.sh /build/build_libexif.sh
 mkdir -p /src/exif && \
@@ -150,7 +153,7 @@ mkdir -p /src/exif && \
   /build/build_libexif.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/exif
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_snore.sh /build/download/download_snore.sh
 cp -v build_snore_windows.sh /build/build_snore_windows.sh
 mkdir -p /src/snore && \
@@ -158,7 +161,7 @@ mkdir -p /src/snore && \
   /build/build_snore_windows.sh && \
   rm -fr /src/snore
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_opus.sh /build/download/download_opus.sh
 cp -v build_opus.sh /build/build_opus.sh
 mkdir -p /src/opus && \
@@ -166,7 +169,7 @@ mkdir -p /src/opus && \
   /build/build_opus.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/opus
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_sodium.sh /build/download/download_sodium.sh
 cp -v build_sodium.sh /build/build_sodium.sh
 mkdir -p /src/sodium && \
@@ -174,7 +177,7 @@ mkdir -p /src/sodium && \
   /build/build_sodium.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/sodium
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_vpx.sh /build/download/download_vpx.sh
 cp -v build_vpx.sh /build/build_vpx.sh
 cp -v patches/vpx-windows.patch /build/patches/vpx-windows.patch
@@ -183,7 +186,7 @@ mkdir -p /src/vpx && \
   /build/build_vpx.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/vpx
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_mingw_ldd.sh /build/download/download_mingw_ldd.sh
 cp -v build_mingw_ldd_windows.sh /build/build_mingw_ldd_windows.sh
 mkdir -p /src/mingw_ldd && \
@@ -191,7 +194,7 @@ mkdir -p /src/mingw_ldd && \
   /build/build_mingw_ldd_windows.sh && \
   rm -fr /src/mingw_ldd
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_nsisshellexecasuser.sh /build/download/download_nsisshellexecasuser.sh
 cp -v build_nsisshellexecasuser_windows.sh /build/build_nsisshellexecasuser_windows.sh
 mkdir -p /src/nsisshellexecasuser && \
@@ -199,7 +202,7 @@ mkdir -p /src/nsisshellexecasuser && \
   /build/build_nsisshellexecasuser_windows.sh && \
   rm -fr /src/nsisshellexecasuser
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_toxcore.sh /build/download/download_toxcore.sh
 cp -v download/download_toxext.sh /build/download/download_toxext.sh
 cp -v download/download_toxext_messages.sh /build/download/download_toxext_messages.sh
@@ -246,7 +249,7 @@ mkdir -p /export && \
 
 mkdir -p /debug_export
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_mingw_debug_scripts.sh /build/download/download_mingw_debug_scripts.sh
 mkdir -p /src/mingw-debug-scripts && \
   cd /src/mingw-debug-scripts && \
@@ -255,7 +258,7 @@ mkdir -p /src/mingw-debug-scripts && \
   cp -a debug-*.bat /debug_export && \
   rm -fr /src/mingw-debug-scripts
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_gmp.sh /build/download/download_gmp.sh
 cp -v build_gmp_windows.sh /build/build_gmp_windows.sh
 mkdir -p /src/gmp && \
@@ -263,7 +266,7 @@ mkdir -p /src/gmp && \
   /build/build_gmp_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/gmp
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_libexpat.sh /build/download/download_libexpat.sh
 cp -v build_libexpat_windows.sh /build/build_libexpat_windows.sh
 mkdir -p /src/libexpat && \
@@ -271,7 +274,7 @@ mkdir -p /src/libexpat && \
   /build/build_libexpat_windows.sh --arch ${SCRIPT_ARCH} && \
   rm -fr /src/libexpat
 
-cd ./buildscripts/
+cd "$_HOME_"/buildscripts/
 cp -v download/download_gdb.sh /build/download/download_gdb.sh
 cp -v build_gdb_windows.sh /build/build_gdb_windows.sh
 mkdir -p /src/gdb && \

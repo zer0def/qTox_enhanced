@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.17.6.028](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.028) (2024-03-31)
+
+[Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.027...v1.17.6.028)
+
+**Merged pull requests:**
+
+- Bump actions/upload-artifact from 3 to 4 [\#22](https://github.com/Zoxcore/qTox_enhanced/pull/22) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v1.17.6.027](https://github.com/Zoxcore/qTox_enhanced/tree/v1.17.6.027) (2024-03-23)
 
 [Full Changelog](https://github.com/Zoxcore/qTox_enhanced/compare/v1.17.6.026...v1.17.6.027)

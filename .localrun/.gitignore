@@ -10,5 +10,6 @@ ubuntu_22.04/
 toxid_save/
 tox_data/
 debian_11/
+debian_12/
 asan_ubuntu_22.04/
 asan_appimage/

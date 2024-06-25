@@ -26,6 +26,7 @@ extern "C" {
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <libavdevice/avdevice.h>
 #include <libavformat/avformat.h>
+#include "avformat7-demux.h"
 #pragma GCC diagnostic pop
 }
 #include "cameradevice.h"
@@ -299,8 +300,8 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
     }
 
     s->iformat = iformat;
-    if (s->iformat->priv_data_size > 0) {
-        s->priv_data = av_mallocz(s->iformat->priv_data_size);
+    if (ffifmt(s->iformat)->priv_data_size > 0) {
+        s->priv_data = av_mallocz(ffifmt(s->iformat)->priv_data_size);
         if (!s->priv_data) {
             avformat_free_context(s);
             return devices;
